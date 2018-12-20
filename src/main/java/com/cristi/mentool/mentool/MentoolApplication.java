@@ -1,9 +1,8 @@
 package com.cristi.mentool.mentool;
 
-import com.cristi.mentool.mentool.infra.AppConfiguration;
+import com.cristi.mentool.mentool.infra.configurations.AppConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication

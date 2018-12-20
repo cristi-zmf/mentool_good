@@ -1,4 +1,4 @@
-package com.cristi.mentool.mentool.infra;
+package com.cristi.mentool.mentool.infra.configurations;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
