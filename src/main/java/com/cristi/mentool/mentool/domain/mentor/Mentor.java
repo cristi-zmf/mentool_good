@@ -12,8 +12,9 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "MENTOR")
 @Access(AccessType.FIELD)
+@AttributeOverride(name = "id", column = @Column(name = "MENTOR_ID"))
 public class Mentor extends User {
     @Column(name = "YEARS_OF_EXPERIENCE")
     private int yearsOfExperience;
@@ -22,8 +23,7 @@ public class Mentor extends User {
     private String linkedInUrl;
 
     @NotEmpty
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "MENTOR_ID")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "mentor")
     private Set<MentorTraining> trainings;
 
     @NotEmpty
@@ -43,10 +43,18 @@ public class Mentor extends User {
             @NotNull PhoneNumber phoneNumber, boolean activatedAccount, @NotBlank String passwordHash,
             int yearsOfExperience, @NotBlank String linkedInUrl, @NotEmpty Set<MentorTraining> trainings, Set<String> timezones
     ) {
-        super(id, firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
+        super(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
         this.yearsOfExperience = yearsOfExperience;
         this.linkedInUrl = linkedInUrl;
         this.trainings = new HashSet<>(trainings);
         this.timezones = new HashSet<>(timezones);
+    }
+
+    /*USED by jpa*/
+    public Mentor() {
+        super(new UniqueId());
+        this.linkedInUrl = null;
+        this.trainings = new HashSet<>();
+        this.timezones = new HashSet<>();
     }
 }

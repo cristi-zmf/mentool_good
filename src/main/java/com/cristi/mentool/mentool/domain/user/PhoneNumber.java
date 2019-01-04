@@ -21,6 +21,11 @@ public class PhoneNumber extends BaseValueObject<PhoneNumber> {
         validate(this);
     }
 
+    private PhoneNumber() {
+        super(PhoneNumber.class);
+        this.value = null;
+    }
+
     @Override
     protected List<Object> attributesToIncludeInEqualityCheck() {
         return asList(value);

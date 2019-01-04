@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @AttributeOverride(name = "id", column = @Column(name = "TRAINING_ID"))
 public class Training extends BaseEntity<Training, UniqueId> {
     @NotEmpty
+    @Column(name = "TRAINING_NAME")
     private String trainingName;
 
     private Training(UniqueId id) {
@@ -21,6 +22,7 @@ public class Training extends BaseEntity<Training, UniqueId> {
     public Training(UniqueId id, @NotEmpty String trainingName) {
         this(id);
         this.trainingName = trainingName;
+        validate(this);
     }
 
     public String getTrainingName() {

@@ -12,6 +12,7 @@
 
 ### IntelliJ IDEA ###
 .idea
+!.idea\runConfigurations
 *.iws
 *.iml
 *.ipr

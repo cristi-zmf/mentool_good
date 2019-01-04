@@ -3,14 +3,11 @@ package com.cristi.mentool.mentool.domain.user;
 import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Entity(name = "USER")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public class User extends BaseEntity<User, UniqueId> {
     @NotBlank
     private String firstName;
@@ -42,7 +39,6 @@ public class User extends BaseEntity<User, UniqueId> {
         this.phoneNumber = phoneNumber;
         this.activatedAccount = activatedAccount;
         this.passwordHash = passwordHash;
-        validate(this);
     }
 
     public User(
@@ -51,6 +47,7 @@ public class User extends BaseEntity<User, UniqueId> {
             boolean activatedAccount, @NotBlank String passwordHash
     ) {
         this(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
+        validate(this);
     }
 
     public User(
@@ -59,6 +56,7 @@ public class User extends BaseEntity<User, UniqueId> {
             boolean activatedAccount, @NotBlank String passwordHash
     ) {
         this(User.class, new UniqueId(), firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
+        validate(this);
     }
 /*Only used for JPA*/
     private User() {

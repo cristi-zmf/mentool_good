@@ -25,6 +25,12 @@ public class EmailAddress extends BaseValueObject<EmailAddress> {
         return value;
     }
 
+    /*USED ONLY BY JPA*/
+    private EmailAddress() {
+        super(EmailAddress.class);
+        this.value = null;
+    }
+
     @Override
     protected List<Object> attributesToIncludeInEqualityCheck() {
         return asList(value);

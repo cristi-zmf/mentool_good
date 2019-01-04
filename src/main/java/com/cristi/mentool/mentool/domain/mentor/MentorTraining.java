@@ -6,6 +6,7 @@ import com.cristi.mentool.mentool.domain.training.Training;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -22,7 +23,12 @@ public class MentorTraining extends BaseEntity<MentorTraining, UniqueId> {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = LAZY, optional = false)
     @JoinColumn(name = "TRAINING_ID")
+    @NotNull
     private Training training;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MENTOR_ID")
+    private Mentor mentor;
 
 
     private MentorTraining(UniqueId id) {
