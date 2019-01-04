@@ -11,8 +11,9 @@
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
-!.idea\runConfigurations
+!.idea/
+.idea/*
+!.idea/runConfigurations/
 *.iws
 *.iml
 *.ipr
