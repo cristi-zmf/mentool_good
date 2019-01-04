@@ -3,6 +3,7 @@ package com.cristi.mentool.mentool.infra.persistence.mentor;
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
 import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
+import com.cristi.mentool.mentool.domain.mentor.ValidMentorGenerator;
 import com.cristi.mentool.mentool.domain.training.Training;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.domain.user.PhoneNumber;
@@ -31,12 +32,7 @@ public class SdjMentorsLocalIT {
 
     @Test
     public void should_save_correctly_a_mentor() {
-        Mentor aMentor = new Mentor(
-                UNIQUE_ID, "Linus", "CoolGuy", new EmailAddress("linus.coolguy@cool.com"),
-                new PhoneNumber("0722577943"), true, "someHash", 10,
-                "linkedingURL", singleton(new MentorTraining(MENTOR_TRAINING_ID, singleton("courses"),
-                new Training(new UniqueId(), "JAVA"))), singleton("GMT+2")
-        );
+        Mentor aMentor = ValidMentorGenerator.LINUS;
         sut.add(aMentor);
         Mentor savedMentor = sdj.getOne(aMentor.getId());
         assertThat(savedMentor).isEqualToComparingFieldByFieldRecursively(aMentor);
@@ -44,15 +40,12 @@ public class SdjMentorsLocalIT {
 
     @Test
     public void should_get_correctly_a_mentor() {
-        Mentor aMentor = new Mentor(
-                UNIQUE_ID, "Linus", "CoolGuy", new EmailAddress("linus.coolguy@cool.com"),
-                new PhoneNumber("0722577943"), true, "someHash", 10,
-                "linkedingURL", singleton(new MentorTraining(MENTOR_TRAINING_ID, singleton("courses"),
-                new Training(new UniqueId(), "JAVA"))), singleton("GMT+2")
-        );
+        Mentor aMentor = ValidMentorGenerator.LINUS;
         sdj.saveAndFlush(aMentor);
         Mentor dbMentor = sut.getOrThrow(aMentor.getId());
         assertThat(dbMentor).isEqualToComparingFieldByFieldRecursively(aMentor);
     }
+
+
 
 }
