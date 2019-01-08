@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Authority  extends BaseEntity<Authority, UniqueId>{
     @NotNull
     @Column(name = "PERSON_ID")
-    private String personRef;
+    private String personId;
 
     @NotBlank
     @Column(name = "ROLE")
@@ -22,18 +22,18 @@ public class Authority  extends BaseEntity<Authority, UniqueId>{
     @Column(name = "PASSWORD_HASH")
     private String passwordHash;
 
-    public Authority(@NotNull UniqueId personRef, @NotBlank Role role, @NotBlank String passwordHash) {
+    public Authority(@NotNull UniqueId personId, @NotBlank Role role, @NotBlank String passwordHash) {
         super(Authority.class, new UniqueId());
-        this.personRef = personRef.getValue();
+        this.personId = personId.getValue();
         this.role = role;
         this.passwordHash = passwordHash;
         validate(this);
     }
 
 
-    public Authority(@NotNull UniqueId id, @NotNull UniqueId personRef, @NotBlank Role role, @NotBlank String passwordHash) {
+    public Authority(@NotNull UniqueId id, @NotNull UniqueId personId, @NotBlank Role role, @NotBlank String passwordHash) {
         super(Authority.class, id);
-        this.personRef = personRef.getValue();
+        this.personId = personId.getValue();
         this.role = role;
         this.passwordHash = passwordHash;
         validate(this);
