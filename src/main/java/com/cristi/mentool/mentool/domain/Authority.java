@@ -10,8 +10,9 @@ import javax.validation.constraints.NotNull;
 @AttributeOverride(name = "id", column = @Column(name = "AUTHORITY_ID"))
 public class Authority  extends BaseEntity<Authority, UniqueId>{
     @NotNull
-    @Column(name = "PERSON_ID")
-    private String personId;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "PERSON_ID"))
+    private UniqueId personId;
 
     @NotBlank
     @Column(name = "ROLE")
@@ -24,7 +25,7 @@ public class Authority  extends BaseEntity<Authority, UniqueId>{
 
     public Authority(@NotNull UniqueId personId, @NotBlank Role role, @NotBlank String passwordHash) {
         super(Authority.class, new UniqueId());
-        this.personId = personId.getValue();
+        this.personId = personId;
         this.role = role;
         this.passwordHash = passwordHash;
         validate(this);
@@ -33,7 +34,7 @@ public class Authority  extends BaseEntity<Authority, UniqueId>{
 
     public Authority(@NotNull UniqueId id, @NotNull UniqueId personId, @NotBlank Role role, @NotBlank String passwordHash) {
         super(Authority.class, id);
-        this.personId = personId.getValue();
+        this.personId = personId;
         this.role = role;
         this.passwordHash = passwordHash;
         validate(this);
