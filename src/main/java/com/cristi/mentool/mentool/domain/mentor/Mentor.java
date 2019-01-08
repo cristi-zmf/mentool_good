@@ -37,13 +37,12 @@ public class Mentor extends User {
     }
 
 
-
     public Mentor(
             UniqueId id, @NotBlank String firstName, @NotBlank String lastName, @NotNull EmailAddress emailAddress,
-            @NotNull PhoneNumber phoneNumber, boolean activatedAccount, @NotBlank String passwordHash,
+            @NotNull PhoneNumber phoneNumber, boolean activatedAccount,
             int yearsOfExperience, @NotBlank String linkedInUrl, @NotEmpty Set<MentorTraining> trainings, Set<String> timezones
     ) {
-        super(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
+        super(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount);
         this.yearsOfExperience = yearsOfExperience;
         this.linkedInUrl = linkedInUrl;
         this.trainings = new HashSet<>(trainings);

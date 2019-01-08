@@ -22,4 +22,8 @@ public class UniqueId extends BaseValueObject<UniqueId> implements Serializable 
     protected List<Object> attributesToIncludeInEqualityCheck() {
         return asList(value);
     }
+
+    public String getValue() {
+        return value;
+    }
 }

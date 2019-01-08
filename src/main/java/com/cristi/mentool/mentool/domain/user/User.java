@@ -18,8 +18,7 @@ public class User extends BaseEntity<User, UniqueId> {
     @NotNull
     private PhoneNumber phoneNumber;
     private boolean activatedAccount;
-    @NotBlank
-    private String passwordHash;
+
 
 
     protected User(UniqueId uniqueId) {
@@ -30,7 +29,7 @@ public class User extends BaseEntity<User, UniqueId> {
     protected User(
             Class<User> type, UniqueId id, @NotBlank String firstName, @NotBlank String lastName,
             @NotNull EmailAddress emailAddress, @NotNull PhoneNumber phoneNumber,
-            boolean activatedAccount, @NotBlank String passwordHash
+            boolean activatedAccount
     ) {
         super(type, id);
         this.firstName = firstName;
@@ -38,24 +37,23 @@ public class User extends BaseEntity<User, UniqueId> {
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.activatedAccount = activatedAccount;
-        this.passwordHash = passwordHash;
     }
 
     public User(
             UniqueId id, @NotBlank String firstName, @NotBlank String lastName,
             @NotNull EmailAddress emailAddress, @NotNull PhoneNumber phoneNumber,
-            boolean activatedAccount, @NotBlank String passwordHash
+            boolean activatedAccount
     ) {
-        this(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
+        this(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount);
         validate(this);
     }
 
     public User(
             @NotBlank String firstName, @NotBlank String lastName,
             @NotNull EmailAddress emailAddress, @NotNull PhoneNumber phoneNumber,
-            boolean activatedAccount, @NotBlank String passwordHash
+            boolean activatedAccount
     ) {
-        this(User.class, new UniqueId(), firstName, lastName, emailAddress, phoneNumber, activatedAccount, passwordHash);
+        this(User.class, new UniqueId(), firstName, lastName, emailAddress, phoneNumber, activatedAccount);
         validate(this);
     }
 /*Only used for JPA*/
@@ -66,7 +64,6 @@ public class User extends BaseEntity<User, UniqueId> {
         this.emailAddress = null;
         this.phoneNumber = null;
         this.activatedAccount = false;
-        this.passwordHash = null;
     }
 
     public String getFirstName() {

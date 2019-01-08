@@ -2,12 +2,16 @@ package com.cristi.mentool.mentool.domain;
 
 import org.springframework.data.annotation.Transient;
 
+import javax.persistence.Access;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 import static java.lang.String.format;
+import static javax.persistence.AccessType.FIELD;
+
 @MappedSuperclass
+@Access(FIELD)
 public abstract class BaseEntity<T extends BaseEntity<T, ID>, ID extends BaseValueObject<ID>> implements Validable<BaseEntity<T, ID>> {
     @Transient
     private Class<T> type;
