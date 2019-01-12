@@ -2,47 +2,43 @@ package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
-import com.cristi.mentool.mentool.domain.training.Training;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-import static javax.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PRIVATE;
 
 @Entity(name = "MENTOR_TRAINING")
-@AttributeOverride(name = "id", column = @Column(name = "MENTOR_TRAINING_ID"))
 @Access(AccessType.FIELD)
+@NoArgsConstructor(access = PRIVATE)
 public class MentorTraining extends BaseEntity<MentorTraining, UniqueId> {
     @NotEmpty
     @ElementCollection
-    @CollectionTable(name = "MENTOR_FACILITY", joinColumns = @JoinColumn(name = "MENTOR_TRAINING_ID"))
+    @CollectionTable(name = "MENTOR_TRAINING_FACILITY")
     @Column(name = "FACILITY")
     private Set<String> facilities;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = LAZY, optional = false)
-    @JoinColumn(name = "TRAINING_ID")
     @NotNull
-    private Training training;
+    @AttributeOverride(name = "value", column = @Column(name = "TRAINING_ID"))
+    private UniqueId trainingId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MENTOR_ID")
-    private Mentor mentor;
+    @AttributeOverride(name = "value", column = @Column(name = "MENTOR_ID"))
+    private UniqueId mentorId;
 
 
     private MentorTraining(UniqueId id) {
         super(MentorTraining.class, id);
     }
 
-    public MentorTraining(UniqueId id, @NotEmpty Set<String> facilities, Training training) {
+    public MentorTraining(UniqueId id, @NotEmpty Set<String> facilities, UniqueId trainingId) {
         this(id);
         this.facilities = facilities;
-        this.training = training;
+        this.trainingId = trainingId;
+        validate(this);
     }
 
-    /*Used only by JPA*/
-    private MentorTraining() {
-        this(new UniqueId());
-    }
 }

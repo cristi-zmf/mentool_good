@@ -2,12 +2,14 @@ package com.cristi.mentool.mentool.domain.user;
 
 import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
+@NoArgsConstructor
 public class User extends BaseEntity<User, UniqueId> {
     @NotBlank
     private String firstName;
@@ -56,15 +58,15 @@ public class User extends BaseEntity<User, UniqueId> {
         this(User.class, new UniqueId(), firstName, lastName, emailAddress, phoneNumber, activatedAccount);
         validate(this);
     }
-/*Only used for JPA*/
-    private User() {
-        this(new UniqueId());
-        this.firstName = null;
-        this.lastName = null;
-        this.emailAddress = null;
-        this.phoneNumber = null;
-        this.activatedAccount = false;
-    }
+///*Only used for JPA*/
+//    private User() {
+//        this(new UniqueId());
+//        this.firstName = null;
+//        this.lastName = null;
+//        this.emailAddress = null;
+//        this.phoneNumber = null;
+//        this.activatedAccount = false;
+//    }
 
     public String getFirstName() {
         return firstName;

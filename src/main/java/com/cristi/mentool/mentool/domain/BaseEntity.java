@@ -1,5 +1,7 @@
 package com.cristi.mentool.mentool.domain;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Access;
@@ -12,6 +14,7 @@ import static javax.persistence.AccessType.FIELD;
 
 @MappedSuperclass
 @Access(FIELD)
+@NoArgsConstructor(force = true)
 public abstract class BaseEntity<T extends BaseEntity<T, ID>, ID extends BaseValueObject<ID>> implements Validable<BaseEntity<T, ID>> {
     @Transient
     private Class<T> type;
@@ -37,6 +40,8 @@ public abstract class BaseEntity<T extends BaseEntity<T, ID>, ID extends BaseVal
         T other = type.cast(obj);
         return id.equals(other.getId());
     }
+
+
 
     @Override
     public String toString() {
