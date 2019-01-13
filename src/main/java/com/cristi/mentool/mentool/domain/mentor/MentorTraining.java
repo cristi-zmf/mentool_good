@@ -2,43 +2,57 @@ package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.math.BigDecimal;
 
-import static lombok.AccessLevel.PRIVATE;
-
-@Entity(name = "MENTOR_TRAINING")
 @Access(AccessType.FIELD)
-@NoArgsConstructor(access = PRIVATE)
+@Getter
+@Entity
 public class MentorTraining extends BaseEntity<MentorTraining, UniqueId> {
     @NotEmpty
-    @ElementCollection
-    @CollectionTable(name = "MENTOR_TRAINING_FACILITY")
-    @Column(name = "FACILITY")
-    private Set<String> facilities;
+    @Column(name = "FACILITIES")
+    private String facilitiesDesc;
 
     @NotNull
-    @AttributeOverride(name = "value", column = @Column(name = "TRAINING_ID"))
-    private UniqueId trainingId;
+    @AttributeOverride(name = "value", column = @Column(name = "SKILL_ID"))
+    private UniqueId skillId;
 
+    @NotEmpty
+    @Column(name = "TRAINING_PREREQUISITE")
+    private String prerequisitesDesc;
+
+    private int noOfTrainingsDone;
+
+    @NotNull
     @AttributeOverride(name = "value", column = @Column(name = "MENTOR_ID"))
     private UniqueId mentorId;
 
+    @NotNull
+    private BigDecimal fee;
 
-    private MentorTraining(UniqueId id) {
+    public MentorTraining(
+            UniqueId id, @NotEmpty String facilitiesDesc, UniqueId skillId, String prerequisitesDesc,
+            int noOfTrainingsDone, UniqueId mentorId, BigDecimal fee
+    ) {
         super(MentorTraining.class, id);
-    }
-
-    public MentorTraining(UniqueId id, @NotEmpty Set<String> facilities, UniqueId trainingId) {
-        this(id);
-        this.facilities = facilities;
-        this.trainingId = trainingId;
+        this.facilitiesDesc = facilitiesDesc;
+        this.skillId = skillId;
+        this.prerequisitesDesc = prerequisitesDesc;
+        this.noOfTrainingsDone = noOfTrainingsDone;
+        this.mentorId = mentorId;
+        this.fee = fee;
         validate(this);
     }
 
+    /*Used by JPA*/
+    private MentorTraining() {
+        super(MentorTraining.class, new UniqueId());
+        prerequisitesDesc = null;
+        skillId = null;
+        facilitiesDesc = null;
+    }
 }

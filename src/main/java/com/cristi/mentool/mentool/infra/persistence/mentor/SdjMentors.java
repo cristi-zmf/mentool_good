@@ -3,14 +3,13 @@ package com.cristi.mentool.mentool.infra.persistence.mentor;
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
 import com.cristi.mentool.mentool.domain.mentor.Mentors;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
+@Primary
 public class SdjMentors implements Mentors {
 
     private final MentorsSdj sdj;
@@ -32,5 +31,15 @@ public class SdjMentors implements Mentors {
     @Override
     public Set<Mentor> findAll() {
         return new HashSet<>(sdj.findAll());
+    }
+
+    @Override
+    public List<Mentor> findAllMentorsTeachingTheSkills(Set<UniqueId> skillIds) {
+        return new ArrayList<>(sdj.findByTrainingsSkillId(skillIds));
+    }
+
+    @Override
+    public List<Mentor> findAll(List<UniqueId> matchingMentorIds) {
+        return sdj.findAllById(matchingMentorIds);
     }
 }

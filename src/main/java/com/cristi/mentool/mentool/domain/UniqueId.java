@@ -1,5 +1,7 @@
 package com.cristi.mentool.mentool.domain;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -9,6 +11,7 @@ import java.util.UUID;
 import static java.util.Arrays.asList;
 
 @Embeddable
+@Access(AccessType.FIELD)
 public class UniqueId extends BaseValueObject<UniqueId> implements Serializable {
     @Column(name = "ID")
     private final String value;
