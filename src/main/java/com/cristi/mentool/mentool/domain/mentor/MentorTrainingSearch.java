@@ -25,7 +25,7 @@ public class MentorTrainingSearch {
     }
 
     private MentorSearchResultsMapper mapper = new MentorSearchResultsMapper();
-    List<MentorSearchResult> searchForMentors (String trainingPattern, LocalDateTime startTime, LocalDateTime endTime) {
+    public List<MentorSearchResult> searchForMentors (String trainingPattern, LocalDateTime startTime, LocalDateTime endTime) {
         List<Skill> matchingTrainings = skills.findAllWithPattern(trainingPattern);
         Set<UniqueId> skillIds = matchingTrainings.stream().map(Skill::getId).collect(toSet());
         List<MentorTraining> matchingMentorTrainings = findAllTrainingsTeachingTheSkills(skillIds);
