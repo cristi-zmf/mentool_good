@@ -14,7 +14,6 @@ import static java.util.stream.Collectors.toSet;
 
 @Service
 public class MentorTrainingSearch {
-
     private Skills skills;
     private Mentors mentors;
     private MentorCalendars mentorCalendars;
@@ -29,19 +28,35 @@ public class MentorTrainingSearch {
     List<MentorSearchResult> searchForMentors (String trainingPattern, LocalDateTime startTime, LocalDateTime endTime) {
         List<Skill> matchingTrainings = skills.findAllWithPattern(trainingPattern);
         Set<UniqueId> skillIds = matchingTrainings.stream().map(Skill::getId).collect(toSet());
-        List<MentorTraining> matchingMentorTrainings = mentors.findAllMentorsTeachingTheSkills(skillIds)
-                .stream().flatMap(m -> m.getTrainings().stream())
-                .filter(t -> skillIds.contains(t.getSkillId()))
-                .collect(toList());
+        List<MentorTraining> matchingMentorTrainings = findAllTrainingsTeachingTheSkills(skillIds);
         List<UniqueId> matchingTimeTrainingsIds = mentorCalendars.findAllInInterval(startTime, endTime);
-        List<MentorTraining> allCriteriaMatchingTrainings = matchingMentorTrainings.stream()
+        List<MentorTraining> allCriteriaMatchingTrainings = filterTrainingsBasedOnTrainingIds(
+                matchingMentorTrainings, matchingTimeTrainingsIds
+        );
+        List<UniqueId> matchingMentorIds = findMentorIdsByMentorTrainings(allCriteriaMatchingTrainings);
+        List<Mentor> allMentorsMatchingCriteria = mentors.findAll(matchingMentorIds);
+        return mapper.map(allCriteriaMatchingTrainings, allMentorsMatchingCriteria);
+    }
+
+    private List<UniqueId> findMentorIdsByMentorTrainings(List<MentorTraining> mentorTrainings) {
+        return mentorTrainings.stream()
+                .map(MentorTraining::getMentorId)
+                .collect(toList());
+    }
+
+    private List<MentorTraining> filterTrainingsBasedOnTrainingIds(
+            List<MentorTraining> matchingMentorTrainings, List<UniqueId> matchingTimeTrainingsIds
+    ) {
+        return matchingMentorTrainings.stream()
                 .filter(t -> matchingTimeTrainingsIds.contains(t.getId()))
                 .distinct()
                 .collect(toList());
-        List<UniqueId> matchingMentorIds = allCriteriaMatchingTrainings.stream()
-                .map(MentorTraining::getMentorId)
+    }
+
+    private List<MentorTraining> findAllTrainingsTeachingTheSkills(Set<UniqueId> skillIds) {
+        return mentors.findAllMentorsTeachingTheSkills(skillIds)
+                .stream().flatMap(m -> m.getTrainings().stream())
+                .filter(t -> skillIds.contains(t.getSkillId()))
                 .collect(toList());
-        List<Mentor> allMentorsMatchingCriteria = mentors.findAll(matchingMentorIds);
-        return mapper.map(allCriteriaMatchingTrainings, allMentorsMatchingCriteria);
     }
 }
