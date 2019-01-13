@@ -1,6 +1,7 @@
 package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,8 @@ public class MentorTrainingSearch {
 
     private MentorSearchResultsMapper mapper = new MentorSearchResultsMapper();
     public List<MentorSearchResult> searchForMentors (String trainingPattern, LocalDateTime startTime, LocalDateTime endTime) {
-        List<Skill> matchingTrainings = skills.findAllWithPattern(trainingPattern);
-        Set<UniqueId> skillIds = matchingTrainings.stream().map(Skill::getId).collect(toSet());
+        List<Skill> matchingSkills = skills.findAllWithPattern(trainingPattern);
+        Set<UniqueId> skillIds = matchingSkills.stream().map(Skill::getId).collect(toSet());
         List<MentorTraining> matchingMentorTrainings = findAllTrainingsTeachingTheSkills(skillIds);
         List<UniqueId> matchingTimeTrainingsIds = mentorCalendars.findAllInInterval(startTime, endTime);
         List<MentorTraining> allCriteriaMatchingTrainings = filterTrainingsBasedOnTrainingIds(
@@ -35,7 +36,7 @@ public class MentorTrainingSearch {
         );
         List<UniqueId> matchingMentorIds = findMentorIdsByMentorTrainings(allCriteriaMatchingTrainings);
         List<Mentor> allMentorsMatchingCriteria = mentors.findAll(matchingMentorIds);
-        return mapper.map(allCriteriaMatchingTrainings, allMentorsMatchingCriteria);
+        return mapper.map(allCriteriaMatchingTrainings, allMentorsMatchingCriteria, matchingSkills);
     }
 
     private List<UniqueId> findMentorIdsByMentorTrainings(List<MentorTraining> mentorTrainings) {

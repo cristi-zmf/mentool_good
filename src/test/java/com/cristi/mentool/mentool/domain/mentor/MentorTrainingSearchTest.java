@@ -1,6 +1,9 @@
 package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.mentor.calendar.InMemoryMentorCalendars;
+import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
+import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.skill.InMemorySkills;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
@@ -92,7 +95,7 @@ public class MentorTrainingSearchTest {
         Mentor mentor = mentorInput.getMentor();
         return new MentorSearchResult(
                 mentor.getFirstName(), mentor.getLastName(), mentor.getYearsOfExperience(), mentor.getNoOfOverallTrainingsDone(),
-                mentorInput.getMentorTraining().getNoOfTrainingsDone(), new BigDecimal(100)
+                mentorInput.getMentorTraining().getNoOfTrainingsDone(), new BigDecimal(100), "JAVA"
         );
     }
 

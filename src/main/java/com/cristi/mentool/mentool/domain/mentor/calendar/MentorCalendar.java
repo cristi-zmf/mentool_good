@@ -1,10 +1,9 @@
-package com.cristi.mentool.mentool.domain.mentor;
+package com.cristi.mentool.mentool.domain.mentor.calendar;
 
 
 import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;

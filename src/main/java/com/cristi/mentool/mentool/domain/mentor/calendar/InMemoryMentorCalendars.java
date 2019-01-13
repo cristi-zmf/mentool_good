@@ -1,4 +1,4 @@
-package com.cristi.mentool.mentool.domain.mentor;
+package com.cristi.mentool.mentool.domain.mentor.calendar;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 

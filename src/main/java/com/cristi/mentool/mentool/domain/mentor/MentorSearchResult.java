@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -22,6 +23,9 @@ public class MentorSearchResult extends BaseValueObject<MentorSearchResult> {
     @JsonProperty
     private final String lastName;
     @JsonProperty
+    @NotEmpty
+    private final String skillName;
+    @JsonProperty
     private final int yearsOfExperience;
     @JsonProperty
     private final int noOfOverallTrainingsDone;
@@ -34,11 +38,12 @@ public class MentorSearchResult extends BaseValueObject<MentorSearchResult> {
 
     public MentorSearchResult(
             String firstName, String lastName, int yearsOfExperience, int noOfOverallTrainingsDone,
-            int noOfTrainingsForTechnologyDone, BigDecimal fee
+            int noOfTrainingsForTechnologyDone, BigDecimal fee, String skillName
     ) {
         super(MentorSearchResult.class);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.skillName = skillName;
         this.yearsOfExperience = yearsOfExperience;
         this.noOfOverallTrainingsDone = noOfOverallTrainingsDone;
         this.noOfTrainingsForTechnologyDone = noOfTrainingsForTechnologyDone;

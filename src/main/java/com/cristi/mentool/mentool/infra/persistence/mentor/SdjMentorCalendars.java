@@ -1,8 +1,8 @@
 package com.cristi.mentool.mentool.infra.persistence.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
-import com.cristi.mentool.mentool.domain.mentor.MentorCalendar;
-import com.cristi.mentool.mentool.domain.mentor.MentorCalendars;
+import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
+import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
