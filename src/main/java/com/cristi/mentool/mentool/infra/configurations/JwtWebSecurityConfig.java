@@ -65,9 +65,6 @@ public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().ignoringAntMatchers("/h2-console/**")//don't apply CSRF protection to /h2-console
-                .and().headers().frameOptions().sameOrigin()
-                .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
