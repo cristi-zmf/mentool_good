@@ -4,6 +4,7 @@ import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.*;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
+import com.cristi.mentool.mentool.domain.security.AddNewAuthority;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
 import org.springframework.boot.ApplicationArguments;
@@ -24,11 +25,13 @@ public class InitialDataSetRunner implements ApplicationRunner {
     private final Mentors mentors;
     private final MentorCalendars mentorCalendars;
     private final Skills skills;
+    private final AddNewAuthority addNewAuthority;
 
-    public InitialDataSetRunner(Mentors mentors, MentorCalendars mentorCalendars, Skills skills) {
+    public InitialDataSetRunner(Mentors mentors, MentorCalendars mentorCalendars, Skills skills, AddNewAuthority addNewAuthority) {
         this.mentors = mentors;
         this.mentorCalendars = mentorCalendars;
         this.skills = skills;
+        this.addNewAuthority = addNewAuthority;
     }
 
     @Override
@@ -42,5 +45,6 @@ public class InitialDataSetRunner implements ApplicationRunner {
         skills.add(skill);
         MentorCalendar calendarEntry = new MentorCalendar(new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME);
         mentorCalendars.add(calendarEntry);
+        addNewAuthority.addAuthorityFor(mentor, "mentor");
     }
 }

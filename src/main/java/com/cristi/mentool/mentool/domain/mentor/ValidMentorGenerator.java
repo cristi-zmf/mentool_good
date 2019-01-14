@@ -15,7 +15,6 @@ public class ValidMentorGenerator {
             "Hands-on", new UniqueId(), "Java core", 20, UNIQUE_ID,
             new BigDecimal(100)
     );
-
     public static Mentor LINUS = new Mentor(
             UNIQUE_ID, "Linus", "CoolGuy", new EmailAddress("linus.coolguy@cool.com"),
             new PhoneNumber("0722577943"), true, 10,
