@@ -1,9 +1,6 @@
 package com.cristi.mentool.mentool.infra.persistence.user;
 
-import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.security.Authority;
-import com.cristi.mentool.mentool.domain.user.EmailAddress;
-import com.cristi.mentool.mentool.domain.user.PhoneNumber;
 import com.cristi.mentool.mentool.domain.user.RegisterUser;
 import com.cristi.mentool.mentool.domain.user.User;
 import com.cristi.mentool.mentool.exposition.user.UserRegistrationCommand;
@@ -19,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static com.cristi.mentool.mentool.domain.Role.USER;
+import static com.cristi.mentool.mentool.infra.persistence.user.ValidUserGenerator.gigiUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -33,7 +31,7 @@ public class RegisterUserLocalIT {
 
     @Before
     public void setup() {
-        gigiUser = getGigiUser();
+        gigiUser = gigiUser();
         usersSdj.deleteAll();
         authoritiesSdj.deleteAll();
     }
@@ -60,11 +58,5 @@ public class RegisterUserLocalIT {
         assertThat(
                 encoder.matches(command.password, actualAuthority.getPassword())
         ).isTrue();
-    }
-    private User getGigiUser() {
-        return new User(
-                new UniqueId(), "Cristi", "Gigi", new EmailAddress("cristi.gigi@test.com"),
-                new PhoneNumber("0711456867"), true
-        );
     }
 }
