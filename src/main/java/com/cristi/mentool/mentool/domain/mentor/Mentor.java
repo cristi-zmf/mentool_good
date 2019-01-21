@@ -1,9 +1,9 @@
 package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.user.BaseUser;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.domain.user.PhoneNumber;
-import com.cristi.mentool.mentool.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AttributeOverride(name = "id", column = @Column(name = "MENTOR_ID"))
 @NoArgsConstructor(access = PRIVATE)
 @Getter
-public class Mentor extends User {
+public class Mentor extends BaseUser {
     @Column(name = "YEARS_OF_EXPERIENCE")
     private int yearsOfExperience;
 
@@ -51,7 +51,7 @@ public class Mentor extends User {
             int yearsOfExperience, @NotBlank String linkedInUrl, @NotEmpty Set<MentorTraining> trainings,
             Set<String> timezones, int noOfOverallTrainingsDone
     ) {
-        super(User.class, id, firstName, lastName, emailAddress, phoneNumber, activatedAccount);
+        super(id, firstName, lastName, emailAddress, phoneNumber, activatedAccount);
         this.yearsOfExperience = yearsOfExperience;
         this.linkedInUrl = linkedInUrl;
         this.trainings = new HashSet<>(trainings);

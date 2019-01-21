@@ -1,4 +1,4 @@
-package com.cristi.mentool.mentool.domain.user;
+package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.BaseValueObject;
 import com.cristi.mentool.mentool.domain.Role;
