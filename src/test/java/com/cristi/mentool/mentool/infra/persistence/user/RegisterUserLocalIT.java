@@ -28,10 +28,12 @@ public class RegisterUserLocalIT {
     @Autowired private UsersSdj usersSdj;
     @Autowired private BCryptPasswordEncoder encoder;
     private User gigiUser;
+    private UserRegistrationCommand command;
 
     @Before
     public void setup() {
         gigiUser = gigiUser();
+        command = new UserRegistrationCommand(gigiUser, "password");
         usersSdj.deleteAll();
         authoritiesSdj.deleteAll();
     }
@@ -39,18 +41,21 @@ public class RegisterUserLocalIT {
 
     @Test
     public void registerUser() {
-        UserRegistrationCommand command = new UserRegistrationCommand(gigiUser, "password");
         sut.registerUser(command);
         List<User> foundUsers = usersSdj.findAll();
         assertThat(foundUsers).hasSize(1);
-        List<Authority> foundAuthorities = authoritiesSdj.findAll();
         User actualUser = foundUsers.get(0);
-        User expectedUser =new User(
+        User expectedUser = new User(
             actualUser.getId(), actualUser.getFirstName(), actualUser.getLastName(), actualUser.getEmailAddress(), actualUser.getPhoneNumber(), false
         );
         Authority expectedAuthority = new Authority(
                 gigiUser.getEmailAddress(), USER, encoder.encode(command.password), expectedUser.getId()
         );
+        checkThatSutLivedUpToTheExpectations(command, actualUser, expectedUser, expectedAuthority);
+    }
+
+    private void checkThatSutLivedUpToTheExpectations(UserRegistrationCommand command, User actualUser, User expectedUser, Authority expectedAuthority) {
+        List<Authority> foundAuthorities = authoritiesSdj.findAll();
         assertThat(actualUser).isEqualToComparingFieldByFieldRecursively(expectedUser);
         assertThat(foundAuthorities).hasSize(1);
         Authority actualAuthority = foundAuthorities.get(0);
