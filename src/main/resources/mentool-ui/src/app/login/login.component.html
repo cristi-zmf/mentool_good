@@ -1,11 +1,11 @@
 <div class="jumbotron">
   <div align="center">
     <mat-form-field>
-      <input matInput placeholder="username">
+      <input matInput placeholder="username" [(ngModel)]="username">
     </mat-form-field>
     <br>
     <mat-form-field>
-      <input matInput placeholder="password">
+      <input matInput placeholder="password" [(ngModel)]="password">
     </mat-form-field>
     <br>
     <button class="btn btn-primary" (click)="login()">Login</button>

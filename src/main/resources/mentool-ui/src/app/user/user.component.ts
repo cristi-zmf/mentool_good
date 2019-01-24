@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CurrentUserService} from '../login/current-user.service';
 
 @Component({
   selector: 'app-user',
@@ -6,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
-  constructor() { }
+  private username: string;
+  private role: string;
+  constructor(private currentUser: CurrentUserService) {
+    this.currentUser = currentUser;
+    const authentifiedUser = currentUser.getCurrentUser();
+    this.username = authentifiedUser.username;
+    this.role = authentifiedUser.role;
+  }
 
   ngOnInit() {
   }
