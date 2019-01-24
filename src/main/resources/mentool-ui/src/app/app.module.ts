@@ -7,16 +7,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoginComponent} from './login/login.component';
 import {RouterModule} from '@angular/router';
 import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
+import {UserComponent} from './user/user.component';
 
 
 const routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'user', component: UserComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
