@@ -113,4 +113,8 @@ public class Authority  extends BaseEntity<Authority, UniqueId> implements UserD
     public boolean isEnabled() {
         return enabled;
     }
+
+    public Role getRole() {
+        return role;
+    }
 }

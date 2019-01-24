@@ -1,6 +1,7 @@
 package com.cristi.mentool.mentool.exposition.authentication;
 
 
+import com.cristi.mentool.mentool.domain.security.Authority;
 import com.cristi.mentool.mentool.infra.security.TokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +23,7 @@ public class AuthenticationResource {
     }
 
     @PostMapping(value = "/generate-token")
-    public AuthToken register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public AuthentifiedUserDto register(@RequestBody LoginUser loginUser) throws AuthenticationException {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginUser.getUsername(),
@@ -30,7 +31,8 @@ public class AuthenticationResource {
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authority loggedAuthority = (Authority) authentication.getPrincipal();
         final String token = jwtTokenUtil.generateToken(authentication);
-        return new AuthToken(token);
+        return new AuthentifiedUserDto(loggedAuthority, token);
     }
 }
