@@ -15,15 +15,14 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 @Embeddable
 @JsonSerialize(using = EmailAddress.Serializer.class)
 @JsonDeserialize(using = EmailAddress.Deserializer.class)
-public class EmailAddress extends BaseValueObject<EmailAddress> {
+public class EmailAddress extends BaseValueObject<EmailAddress> implements Serializable {
     @Email @NotBlank @Column(name = "EMAIL")
     private final String value;
 

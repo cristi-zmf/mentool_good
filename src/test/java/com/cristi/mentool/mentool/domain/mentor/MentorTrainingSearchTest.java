@@ -103,15 +103,15 @@ public class MentorTrainingSearchTest {
         private Mentor linus;
         private MentorTraining mentorTraining;
 
-        public Mentor getMentor() {
+        Mentor getMentor() {
             return linus;
         }
 
-        public MentorTraining getMentorTraining() {
+        MentorTraining getMentorTraining() {
             return mentorTraining;
         }
 
-        public MentorInput setupMentor() {
+        MentorInput setupMentor() {
             linus = LINUS;
             inMemoryMentors.add(linus);
             mentorTraining = linus.getTrainings().stream()

@@ -1,6 +1,5 @@
 package com.cristi.mentool.mentool.domain.mentor;
 
-import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.user.BaseUser;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.domain.user.PhoneNumber;
@@ -46,12 +45,12 @@ public class Mentor extends BaseUser {
 
 
     public Mentor(
-            UniqueId id, @NotBlank String firstName, @NotBlank String lastName, @NotNull EmailAddress emailAddress,
-            @NotNull PhoneNumber phoneNumber, boolean activatedAccount,
+            @NotNull EmailAddress username, @NotBlank String firstName, @NotBlank String lastName,
+            @NotNull PhoneNumber phoneNumber,
             int yearsOfExperience, @NotBlank String linkedInUrl, @NotEmpty Set<MentorTraining> trainings,
             Set<String> timezones, int noOfOverallTrainingsDone
     ) {
-        super(id, firstName, lastName, emailAddress, phoneNumber, activatedAccount);
+        super(username, firstName, lastName, phoneNumber);
         this.yearsOfExperience = yearsOfExperience;
         this.linkedInUrl = linkedInUrl;
         this.trainings = new HashSet<>(trainings);

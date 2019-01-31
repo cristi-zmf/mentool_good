@@ -4,6 +4,7 @@ import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
+import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,12 +35,12 @@ public class MentorTrainingSearch {
         List<MentorTraining> allCriteriaMatchingTrainings = filterTrainingsBasedOnTrainingIds(
                 matchingMentorTrainings, matchingTimeTrainingsIds
         );
-        List<UniqueId> matchingMentorIds = findMentorIdsByMentorTrainings(allCriteriaMatchingTrainings);
+        List<EmailAddress> matchingMentorIds = findMentorEmailsByMentorTrainings(allCriteriaMatchingTrainings);
         List<Mentor> allMentorsMatchingCriteria = mentors.findAll(matchingMentorIds);
         return mapper.map(allCriteriaMatchingTrainings, allMentorsMatchingCriteria, matchingSkills);
     }
 
-    private List<UniqueId> findMentorIdsByMentorTrainings(List<MentorTraining> mentorTrainings) {
+    private List<EmailAddress> findMentorEmailsByMentorTrainings(List<MentorTraining> mentorTrainings) {
         return mentorTrainings.stream()
                 .map(MentorTraining::getMentorId)
                 .collect(toList());

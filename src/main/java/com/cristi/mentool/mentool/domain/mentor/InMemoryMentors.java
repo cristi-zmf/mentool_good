@@ -1,6 +1,7 @@
 package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.user.EmailAddress;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,8 +20,8 @@ public class InMemoryMentors implements Mentors {
     }
 
     @Override
-    public Mentor getOrThrow(UniqueId mentorId) {
-        return db.stream().filter(m -> m.getId().equals(mentorId))
+    public Mentor getOrThrow(EmailAddress username) {
+        return db.stream().filter(m -> m.getId().equals(username))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
@@ -39,7 +40,7 @@ public class InMemoryMentors implements Mentors {
     }
 
     @Override
-    public List<Mentor> findAll(List<UniqueId> matchingMentorIds) {
+    public List<Mentor> findAll(List<EmailAddress> matchingMentorIds) {
         return db.stream()
                 .filter(m -> matchingMentorIds.contains(m.getId()))
                 .collect(toList())

@@ -2,6 +2,7 @@ package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -29,14 +30,14 @@ public class MentorTraining extends BaseEntity<MentorTraining, UniqueId> {
 
     @NotNull
     @AttributeOverride(name = "value", column = @Column(name = "MENTOR_ID"))
-    private UniqueId mentorId;
+    private EmailAddress mentorId;
 
     @NotNull
     private BigDecimal fee;
 
     public MentorTraining(
             UniqueId id, @NotEmpty String facilitiesDesc, UniqueId skillId, String prerequisitesDesc,
-            int noOfTrainingsDone, UniqueId mentorId, BigDecimal fee
+            int noOfTrainingsDone, EmailAddress mentorId, BigDecimal fee
     ) {
         super(MentorTraining.class, id);
         this.facilitiesDesc = facilitiesDesc;

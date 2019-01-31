@@ -2,6 +2,7 @@ package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.skill.Skill;
+import com.cristi.mentool.mentool.domain.user.EmailAddress;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class MentorSearchResultsMapper {
     public List<MentorSearchResult> map(
             List<MentorTraining> allCriteriaMatchingTrainings, List<Mentor> allMentorsMatchingCriteria, List<Skill> skills
     ) {
-        Map<UniqueId, Mentor> mentorMap = allMentorsMatchingCriteria.stream().collect(
+        Map<EmailAddress, Mentor> mentorMap = allMentorsMatchingCriteria.stream().collect(
                 toMap(Mentor::getId, Function.identity())
         );
         Map<UniqueId, Skill> skillMap = skills.stream().collect(toMap(Skill::getId, Function.identity()));
@@ -23,7 +24,7 @@ public class MentorSearchResultsMapper {
                 .collect(toList());
     }
 
-    private MentorSearchResult mapTraining(MentorTraining training, Map<UniqueId, Mentor> mentorMap, Map<UniqueId, Skill> skills) {
+    private MentorSearchResult mapTraining(MentorTraining training, Map<EmailAddress, Mentor> mentorMap, Map<UniqueId, Skill> skills) {
         Mentor mentorOfTraining = mentorMap.get(training.getMentorId());
         Skill skill = skills.get(training.getSkillId());
         return new MentorSearchResult(
