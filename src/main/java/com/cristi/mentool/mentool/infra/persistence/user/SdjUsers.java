@@ -1,11 +1,12 @@
 package com.cristi.mentool.mentool.infra.persistence.user;
 
-import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.domain.user.User;
 import com.cristi.mentool.mentool.domain.user.Users;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Repository
@@ -27,7 +28,10 @@ public class SdjUsers implements Users {
     }
 
     @Override
-    public User getOrThrow(UniqueId userId) {
-        return sdj.getOne(userId);
+    public User getOrThrow(EmailAddress userId) {
+        return sdj.findById(userId)
+                .orElseThrow(
+                        () -> new NoSuchElementException(userId.getValue())
+                );
     }
 }
