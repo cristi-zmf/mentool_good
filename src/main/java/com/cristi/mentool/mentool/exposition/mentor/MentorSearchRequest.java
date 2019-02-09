@@ -3,20 +3,17 @@ package com.cristi.mentool.mentool.exposition.mentor;
 import com.cristi.mentool.mentool.domain.RomanianDateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 public class MentorSearchRequest {
     @JsonProperty
-    @NotEmpty
     private String skillNamePattern;
     @JsonProperty
-    @NotEmpty
     private String startDate;
     @JsonProperty
-    @NotEmpty
     private String endDate;
 
 
@@ -25,10 +22,16 @@ public class MentorSearchRequest {
     }
 
     public LocalDateTime getStartTime() {
+        if (StringUtils.isEmpty(startDate)) {
+            return null;
+        }
         return LocalDateTime.parse(startDate, RomanianDateTimeFormatter.ROMANIAN_FORMATTER);
     }
 
     public LocalDateTime getEndTime() {
+        if (StringUtils.isEmpty(endDate)) {
+            return null;
+        }
         return LocalDateTime.parse(endDate, RomanianDateTimeFormatter.ROMANIAN_FORMATTER);
     }
 }
