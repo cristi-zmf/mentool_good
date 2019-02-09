@@ -93,10 +93,11 @@ public class MentorTrainingSearchTest {
 
     private MentorSearchResult expectedResult(MentorInput mentorInput) {
         Mentor mentor = mentorInput.getMentor();
+        MentorTraining training = mentorInput.getMentorTraining();
         return new MentorSearchResult(
                 mentor.getFirstName(), mentor.getLastName(), mentor.getYearsOfExperience(), mentor.getNoOfOverallTrainingsDone(),
-                mentorInput.getMentorTraining().getNoOfTrainingsDone(), new BigDecimal(100), "JAVA"
-        );
+                training.getNoOfTrainingsDone(), new BigDecimal(100), "JAVA",
+                training.getId().getValue());
     }
 
     private class MentorInput {

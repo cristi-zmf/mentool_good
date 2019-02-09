@@ -108,9 +108,11 @@ public class MentorTrainingSearchLocalIT {
 
     private MentorSearchResult expectedResult(MentorInput mentorInput) {
         Mentor mentor = mentorInput.getMentor();
+        MentorTraining mentorTraining = mentorInput.getMentorTraining();
         return new MentorSearchResult(
                 mentor.getFirstName(), mentor.getLastName(), mentor.getYearsOfExperience(), mentor.getNoOfOverallTrainingsDone(),
-                mentorInput.getMentorTraining().getNoOfTrainingsDone(), new BigDecimal(100), "JAVA"
+                mentorTraining.getNoOfTrainingsDone(), new BigDecimal(100), "JAVA",
+                mentorTraining.getId().getValue()
         );
     }
 

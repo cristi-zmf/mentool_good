@@ -30,7 +30,7 @@ public class MentorSearchResultsMapper {
         return new MentorSearchResult(
                 mentorOfTraining.getFirstName(), mentorOfTraining.getLastName(), mentorOfTraining.getYearsOfExperience(),
                 mentorOfTraining.getNoOfOverallTrainingsDone(), training.getNoOfTrainingsDone(),
-                training.getFee(), skill.getSkillName()
+                training.getFee(), skill.getSkillName(), training.getId().getValue()
         );
     }
 }

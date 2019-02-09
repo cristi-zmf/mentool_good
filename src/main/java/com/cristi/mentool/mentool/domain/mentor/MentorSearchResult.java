@@ -31,6 +31,10 @@ public class MentorSearchResult extends BaseValueObject<MentorSearchResult> {
     private final int noOfOverallTrainingsDone;
     @JsonProperty
     private final int noOfTrainingsForTechnologyDone;
+    @JsonProperty
+    private final String trainingId;
+
+
     @NotNull
     @JsonProperty
     @JsonSerialize(contentUsing = BigDecimalSerializer.class)
@@ -38,8 +42,7 @@ public class MentorSearchResult extends BaseValueObject<MentorSearchResult> {
 
     public MentorSearchResult(
             String firstName, String lastName, int yearsOfExperience, int noOfOverallTrainingsDone,
-            int noOfTrainingsForTechnologyDone, BigDecimal fee, String skillName
-    ) {
+            int noOfTrainingsForTechnologyDone, BigDecimal fee, String skillName, String trainingId) {
         super(MentorSearchResult.class);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,12 +51,17 @@ public class MentorSearchResult extends BaseValueObject<MentorSearchResult> {
         this.noOfOverallTrainingsDone = noOfOverallTrainingsDone;
         this.noOfTrainingsForTechnologyDone = noOfTrainingsForTechnologyDone;
         this.fee = fee;
+        this.trainingId = trainingId;
         validate(this);
     }
 
     @Override
     protected List<Object> attributesToIncludeInEqualityCheck() {
-        return asList(firstName, lastName, yearsOfExperience, noOfOverallTrainingsDone, noOfTrainingsForTechnologyDone, fee);
+        return asList(
+                firstName, lastName, yearsOfExperience,
+                noOfOverallTrainingsDone, noOfTrainingsForTechnologyDone,
+                fee, trainingId
+        );
     }
 
     private class BigDecimalSerializer extends JsonSerializer<BigDecimal> {
