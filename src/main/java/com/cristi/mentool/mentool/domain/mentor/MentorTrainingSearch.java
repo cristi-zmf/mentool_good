@@ -31,7 +31,7 @@ public class MentorTrainingSearch {
         List<Skill> matchingSkills = skills.findAllWithPattern(trainingPattern);
         Set<UniqueId> skillIds = matchingSkills.stream().map(Skill::getId).collect(toSet());
         List<MentorTraining> matchingMentorTrainings = findAllTrainingsTeachingTheSkills(skillIds);
-        List<UniqueId> matchingTimeTrainingsIds = mentorCalendars.findAllInInterval(startTime, endTime);
+        List<UniqueId> matchingTimeTrainingsIds = mentorCalendars.findAllTrainingIdsInInterval(startTime, endTime);
         List<MentorTraining> allCriteriaMatchingTrainings = filterTrainingsBasedOnTrainingIds(
                 matchingMentorTrainings, matchingTimeTrainingsIds
         );

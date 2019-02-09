@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 public class InMemoryMentorCalendars implements MentorCalendars {
     private final Set<MentorCalendar> db = new HashSet<>();
     @Override
-    public List<UniqueId> findAllInInterval(LocalDateTime startTime, LocalDateTime endTime) {
+    public List<UniqueId> findAllTrainingIdsInInterval(LocalDateTime startTime, LocalDateTime endTime) {
         return db.stream()
                 .filter(c -> startTime.isBefore(c.getStartTime()) || c.getStartTime().isEqual(startTime))
                 .filter(c -> c.getEndTime().isBefore(endTime) || c.getEndTime().isEqual(endTime))

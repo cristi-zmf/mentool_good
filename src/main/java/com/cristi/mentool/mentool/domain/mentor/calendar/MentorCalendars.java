@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MentorCalendars {
-    List<UniqueId> findAllInInterval(LocalDateTime startTime, LocalDateTime endTime);
+    List<UniqueId> findAllTrainingIdsInInterval(LocalDateTime startTime, LocalDateTime endTime);
 
     MentorCalendar add(MentorCalendar calendarEntry);
 }

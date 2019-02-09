@@ -19,8 +19,14 @@ public class SdjMentorCalendars implements MentorCalendars {
     }
 
     @Override
-    public List<UniqueId> findAllInInterval(LocalDateTime startTime, LocalDateTime endTime) {
-        return sdj.findByStartTimeGreaterThanEqualAndEndTimeLessThanEqual(startTime, endTime).stream()
+    public List<UniqueId> findAllTrainingIdsInInterval(LocalDateTime startTime, LocalDateTime endTime) {
+        if (startTime == null) {
+            startTime = LocalDateTime.MIN;
+        }
+        if (endTime == null) {
+            endTime = LocalDateTime.MAX;
+        }
+        return sdj.findByStartTimeAndEndTime(startTime, endTime).stream()
                 .map(MentorCalendar::getTrainingId)
                 .collect(toList());
     }

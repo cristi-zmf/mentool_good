@@ -1,5 +1,6 @@
 package com.cristi.mentool.mentool.domain.mentor;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -26,5 +27,11 @@ public class ZonedDateTimeTest {
         System.out.println(parisTime.toInstant());
         assertThat(parisLocalDateTime).isEqualTo(someDate);
         assertThat(parisTime.toInstant()).isEqualTo(bucharestDate.toInstant());
+    }
+
+    @Test
+    public void how_dates_are_compared() {
+        LocalDateTime someDate = LocalDateTime.parse("2017-05-23T00:00");
+        Assertions.assertThat(LocalDateTime.MAX).isAfter(someDate);
     }
 }

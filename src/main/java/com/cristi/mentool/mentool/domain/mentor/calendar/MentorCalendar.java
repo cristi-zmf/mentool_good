@@ -5,14 +5,13 @@ import com.cristi.mentool.mentool.domain.BaseEntity;
 import com.cristi.mentool.mentool.domain.UniqueId;
 import lombok.Getter;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Entity(name = "MENTOR_CALENDAR")
+@Entity
 @Getter
+@Access(AccessType.FIELD)
 public class MentorCalendar extends BaseEntity<MentorCalendar, UniqueId> {
     @NotNull
     @AttributeOverride(name = "value", column = @Column(name = "TRAINING_ID"))

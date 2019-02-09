@@ -17,6 +17,9 @@ public class SdjSkills implements Skills {
 
     @Override
     public List<Skill> findAllWithPattern(String skillNamePattern) {
+        if (skillNamePattern == null) {
+            return  new ArrayList<>(sdj.findAll());
+        }
         return new ArrayList<>(sdj.findSkillBySkillNameContainsIgnoreCase(skillNamePattern));
     }
 

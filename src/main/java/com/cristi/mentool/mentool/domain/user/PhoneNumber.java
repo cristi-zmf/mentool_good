@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -22,6 +24,8 @@ import static java.util.Arrays.asList;
 
 @Embeddable
 @Getter
+@JsonSerialize(using = PhoneNumber.Serializer.class)
+@JsonDeserialize(using = PhoneNumber.Deserializer.class)
 public class PhoneNumber extends BaseValueObject<PhoneNumber> {
     @NotBlank @Pattern(regexp="(^$|[0-9]{10})") @Column(name = "PHONE_NUMBER")
     private final String value;
@@ -45,7 +49,7 @@ public class PhoneNumber extends BaseValueObject<PhoneNumber> {
     public static class Serializer extends JsonSerializer<PhoneNumber> {
         @Override
         public void serialize(PhoneNumber phoneNumber, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-            jsonGenerator.writeRawValue(phoneNumber.getValue());
+            jsonGenerator.writeString(phoneNumber.getValue());
         }
     }
 

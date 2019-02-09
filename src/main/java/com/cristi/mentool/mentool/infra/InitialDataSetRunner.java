@@ -8,6 +8,8 @@ import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
+import com.cristi.mentool.mentool.domain.user.Users;
+import com.cristi.mentool.mentool.domain.user.ValidUserGenerator;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -25,11 +27,13 @@ public class InitialDataSetRunner implements ApplicationRunner {
 
     private final Mentors mentors;
     private final MentorCalendars mentorCalendars;
+    private final Users users;
     private final Skills skills;
 
-    public InitialDataSetRunner(Mentors mentors, MentorCalendars mentorCalendars, Skills skills) {
+    public InitialDataSetRunner(Mentors mentors, MentorCalendars mentorCalendars, Users users, Skills skills) {
         this.mentors = mentors;
         this.mentorCalendars = mentorCalendars;
+        this.users = users;
         this.skills = skills;
     }
 
@@ -44,5 +48,6 @@ public class InitialDataSetRunner implements ApplicationRunner {
         skills.add(skill);
         MentorCalendar calendarEntry = new MentorCalendar(new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME);
         mentorCalendars.add(calendarEntry);
+        users.add(ValidUserGenerator.CRISTI);
     }
 }

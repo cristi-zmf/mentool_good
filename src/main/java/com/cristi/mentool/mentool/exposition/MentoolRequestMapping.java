@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping(value = "/persons", produces = APPLICATION_JSON_UTF8_VALUE, consumes = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/persons", produces = APPLICATION_JSON_UTF8_VALUE)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @RestController

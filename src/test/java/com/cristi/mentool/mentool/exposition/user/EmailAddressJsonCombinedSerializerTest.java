@@ -16,7 +16,8 @@ public class EmailAddressJsonCombinedSerializerTest {
     public void test_serializer() throws JsonProcessingException {
         String randomRawAddress = "cristi.zmf@test.com";
         String serializedAddress = new ObjectMapper().writeValueAsString(new EmailAddress(randomRawAddress));
-        assertThat(serializedAddress).isEqualTo(randomRawAddress);
+        System.out.println(serializedAddress);
+        assertThat(serializedAddress).isEqualTo("\"" + randomRawAddress + "\"");
     }
 
     @Test
