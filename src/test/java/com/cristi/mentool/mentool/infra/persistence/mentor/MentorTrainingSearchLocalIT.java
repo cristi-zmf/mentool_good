@@ -6,6 +6,7 @@ import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
+import com.cristi.mentool.mentool.infra.dataset.SkillsDataset;
 import com.cristi.mentool.mentool.infra.persistence.IntegrationTestWithNoDataset;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +46,14 @@ public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
                 null, null, null
         );
         checkExpectationsForActualResults(results);
+    }
+
+    @Test
+    public void should_return_1_result_for_java_and_no_dates() {
+        List<MentorSearchResult> results = sut.searchForMentors(
+                SkillsDataset.JAVA.getSkillName(), null, null
+        );
+        assertThat(results).hasSize(1);
     }
 
     @Test
