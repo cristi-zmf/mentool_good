@@ -4,6 +4,7 @@ import com.cristi.mentool.mentool.domain.RomanianDateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -27,13 +28,13 @@ public class MentorSearchRequest {
         if (StringUtils.isEmpty(startDate)) {
             return null;
         }
-        return LocalDateTime.parse(startDate, RomanianDateTimeFormatter.ROMANIAN_FORMATTER);
+        return LocalDateTime.parse(startDate);
     }
 
     public LocalDateTime getEndTime() {
         if (StringUtils.isEmpty(endDate)) {
             return null;
         }
-        return LocalDateTime.parse(endDate, RomanianDateTimeFormatter.ROMANIAN_FORMATTER);
+        return LocalDateTime.parse(endDate);
     }
 }

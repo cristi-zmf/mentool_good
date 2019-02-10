@@ -21,10 +21,10 @@ public class SdjMentorCalendars implements MentorCalendars {
     @Override
     public List<UniqueId> findAllTrainingIdsInInterval(LocalDateTime startTime, LocalDateTime endTime) {
         if (startTime == null) {
-            startTime = LocalDateTime.MIN;
+            startTime = LocalDateTime.MAX;
         }
         if (endTime == null) {
-            endTime = LocalDateTime.MAX;
+            endTime = LocalDateTime.MIN;
         }
         return sdj.findByStartTimeAndEndTime(startTime, endTime).stream()
                 .map(MentorCalendar::getTrainingId)

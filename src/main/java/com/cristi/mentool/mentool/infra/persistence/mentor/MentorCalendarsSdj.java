@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public interface MentorCalendarsSdj extends JpaRepository<MentorCalendar, UniqueId> {
-    @Query("select c from MentorCalendar c where :startTime >= c.startTime  and :endTime <= c.endTime ")
+    @Query("select c from MentorCalendar c where :startTime <= c.startTime  and :endTime >= c.endTime ")
     Set<MentorCalendar> findByStartTimeAndEndTime(
             @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime
     );

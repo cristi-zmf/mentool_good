@@ -59,7 +59,7 @@ public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
     @Test
     public void should_return_results_matching_the_training_pattern_and_date_times() {
         List<MentorSearchResult> results = sut.searchForMentors(
-                "ava", START_TIME.plusHours(1L), END_TIME.minusDays(1L)
+                "ava", START_TIME.minusHours(1L), END_TIME.plusDays(1L)
         );
         checkExpectationsForActualResults(results);
     }
@@ -67,7 +67,7 @@ public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
     @Test
     public void should_return_results_matching_the_training_pattern_and_date_times_if_start_date_is_equal_to_skill_start() {
         List<MentorSearchResult> results = sut.searchForMentors(
-                "ava", START_TIME, END_TIME.minusDays(1L)
+                "ava", START_TIME, END_TIME.plusDays(1L)
         );
         checkExpectationsForActualResults(results);
     }
@@ -75,7 +75,7 @@ public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
     @Test
     public void should_return_results_matching_the_training_pattern_and_date_times_if_end_date_is_equal_to_skill_end() {
         List<MentorSearchResult> results = sut.searchForMentors(
-                "ava", START_TIME.plusHours(1L), END_TIME
+                "ava", START_TIME.minusHours(1L), END_TIME
         );
         checkExpectationsForActualResults(results);
     }
