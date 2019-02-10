@@ -58,6 +58,7 @@ public class MentorTrainingSearch {
     private List<MentorTraining> findAllTrainingsTeachingTheSkills(Set<UniqueId> skillIds) {
         return mentors.findAllMentorsTeachingTheSkills(skillIds)
                 .stream().flatMap(m -> m.getTrainings().stream())
+                .peek(t -> System.out.println(t.getSkillId()))
                 .filter(t -> skillIds.contains(t.getSkillId()))
                 .collect(toList());
     }

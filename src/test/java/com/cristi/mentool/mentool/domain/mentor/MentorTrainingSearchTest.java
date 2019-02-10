@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.cristi.mentool.mentool.domain.mentor.ValidMentorGenerator.LINUS;
+import static com.cristi.mentool.mentool.infra.dataset.MentorDataSet.LINUS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MentorTrainingSearchTest {

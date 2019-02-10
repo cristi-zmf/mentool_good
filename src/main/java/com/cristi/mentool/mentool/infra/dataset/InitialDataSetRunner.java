@@ -1,30 +1,24 @@
-package com.cristi.mentool.mentool.infra;
+package com.cristi.mentool.mentool.infra.dataset;
 
-import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
-import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
 import com.cristi.mentool.mentool.domain.mentor.Mentors;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
-import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
 import com.cristi.mentool.mentool.domain.user.Users;
 import com.cristi.mentool.mentool.domain.user.ValidUserGenerator;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
-
-import static com.cristi.mentool.mentool.domain.RomanianDateTimeFormatter.ROMANIAN_FORMATTER;
-import static com.cristi.mentool.mentool.domain.mentor.ValidMentorGenerator.LINUS;
+import java.util.stream.Stream;
 
 @Component
+@Transactional
+@Profile("!NO_DATA_SET")
 public class InitialDataSetRunner implements ApplicationRunner {
-    private static final LocalDateTime START_TIME = LocalDateTime.parse("13.01.2018 23:43", ROMANIAN_FORMATTER);
-    private static final LocalDateTime END_TIME = LocalDateTime.parse("28.01.2018 23:43", ROMANIAN_FORMATTER);
-
     private final Mentors mentors;
     private final MentorCalendars mentorCalendars;
     private final Users users;
@@ -39,15 +33,18 @@ public class InitialDataSetRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        Mentor mentor = LINUS;
-        mentors.add(mentor);
-        MentorTraining mentorTraining = mentor.getTrainings().stream().findFirst()
-                .orElseThrow(NoSuchElementException::new);
-        UniqueId skillId = mentorTraining.getSkillId();
-        Skill skill = new Skill(skillId, "JAVA");
-        skills.add(skill);
-        MentorCalendar calendarEntry = new MentorCalendar(new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME);
-        mentorCalendars.add(calendarEntry);
+        dataSetFromDedicatedDatasets();
+    }
+
+    private void dataSetFromDedicatedDatasets() {
+        SkillsDataset.getAllSkills().forEach(skills::add);
+        MentorDataSet.getAllMentors().forEach(mentors::add);
+        MentorDataSet.getAllMentors().stream().flatMap(this::mentorTrainingsProgram).
+                forEach(mentorCalendars::add);
         users.add(ValidUserGenerator.CRISTI);
+    }
+
+    private Stream<MentorCalendar> mentorTrainingsProgram(Mentor mentor) {
+        return CalendarDataSet.generateMentorCalendarForTrainings(mentor.getTrainings()).stream();
     }
 }

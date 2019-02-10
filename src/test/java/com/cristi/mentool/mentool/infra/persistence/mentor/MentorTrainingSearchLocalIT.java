@@ -1,28 +1,25 @@
-package com.cristi.mentool.mentool.domain.mentor;
+package com.cristi.mentool.mentool.infra.persistence.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.mentor.*;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
+import com.cristi.mentool.mentool.infra.persistence.IntegrationTestWithNoDataset;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static com.cristi.mentool.mentool.domain.mentor.ValidMentorGenerator.LINUS;
+import static com.cristi.mentool.mentool.infra.dataset.MentorDataSet.LINUS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
-public class MentorTrainingSearchLocalIT {
+public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
     private static final LocalDateTime START_TIME = ValidRomanianIntervalGenerator.START_TIME;
     private static final LocalDateTime END_TIME = ValidRomanianIntervalGenerator.END_TIME;
     @Autowired
