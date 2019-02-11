@@ -2,7 +2,7 @@ package com.cristi.mentool.mentool.infra.persistence.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
-import com.cristi.mentool.mentool.domain.mentor.MentorRegistrationCommand;
+import com.cristi.mentool.mentool.exposition.mentor.MentorRegistrationCommand;
 import com.cristi.mentool.mentool.domain.mentor.MentorService;
 import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
@@ -71,7 +71,7 @@ public class MentorServiceLocalIT extends IntegrationTestWithDataset {
 
     private Mentor getExpectedFromRegistrationCommand(MentorRegistrationCommand command) {
         return new Mentor(
-                new EmailAddress(command.getEmailAddress()), command.getFirstName(), command.getLastName(),
+                new EmailAddress(command.getUsername()), command.getFirstName(), command.getLastName(),
                 new PhoneNumber(command.getPhoneNumber()), command.getYearsOfExperience(), command.getLinkedinUrl(),
                 new HashSet<>(), 0
         );

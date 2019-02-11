@@ -1,5 +1,6 @@
-package com.cristi.mentool.mentool.domain.mentor;
+package com.cristi.mentool.mentool.exposition.mentor;
 
+import com.cristi.mentool.mentool.domain.mentor.Mentor;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.domain.user.PhoneNumber;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +21,7 @@ public class MentorRegistrationCommand {
     @JsonProperty
     private String lastName;
     @JsonProperty
-    private String emailAddress;
+    private String username;
     @JsonProperty
     private String phoneNumber;
     @JsonProperty
@@ -30,7 +31,7 @@ public class MentorRegistrationCommand {
 
     public Mentor toNewMentor() {
         return new Mentor(
-                new EmailAddress(emailAddress), firstName, lastName, new PhoneNumber(phoneNumber),
+                new EmailAddress(username), firstName, lastName, new PhoneNumber(phoneNumber),
                 yearsOfExperience, linkedinUrl, new HashSet<>(), 0
         );
     }

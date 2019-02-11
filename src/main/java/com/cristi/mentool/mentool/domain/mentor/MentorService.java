@@ -2,6 +2,7 @@ package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
+import com.cristi.mentool.mentool.exposition.mentor.MentorRegistrationCommand;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
