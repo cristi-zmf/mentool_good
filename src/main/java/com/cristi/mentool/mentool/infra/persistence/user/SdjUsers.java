@@ -34,4 +34,9 @@ public class SdjUsers implements Users {
                         () -> new NoSuchElementException(userId.getValue())
                 );
     }
+
+    @Override
+    public boolean exists(EmailAddress address) {
+        return sdj.existsById(address);
+    }
 }

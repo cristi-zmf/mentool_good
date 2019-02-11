@@ -6,4 +6,5 @@ public interface Users {
     User add(User user);
     Set<User> findAll();
     User getOrThrow(EmailAddress userId);
+    boolean exists(EmailAddress address);
 }

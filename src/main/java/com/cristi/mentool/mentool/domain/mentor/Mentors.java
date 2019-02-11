@@ -14,4 +14,5 @@ public interface Mentors {
     List<Mentor> findAllMentorsTeachingTheSkills(Set<UniqueId> skillIds);
 
     List<Mentor> findAll(List<EmailAddress> matchingMentorIds);
+    boolean exists(EmailAddress address);
 }

@@ -43,4 +43,9 @@ public class SdjMentors implements Mentors {
     public List<Mentor> findAll(List<EmailAddress> matchingMentorIds) {
         return sdj.findAllById(matchingMentorIds);
     }
+
+    @Override
+    public boolean exists(EmailAddress address) {
+        return sdj.existsById(address);
+    }
 }

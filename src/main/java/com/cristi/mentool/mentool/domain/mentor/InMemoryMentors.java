@@ -46,4 +46,9 @@ public class InMemoryMentors implements Mentors {
                 .collect(toList())
                 ;
     }
+
+    @Override
+    public boolean exists(EmailAddress address) {
+        return db.stream().anyMatch(m -> m.getId().equals(address));
+    }
 }
