@@ -26,7 +26,7 @@ public class SdjMentors implements Mentors {
 
     @Override
     public Mentor getOrThrow(EmailAddress username) {
-        return Optional.ofNullable(sdj.getOne(username)).orElseThrow(() -> new NoSuchElementException(username.toString()));
+        return sdj.findById(username).orElseThrow(() -> new NoSuchElementException(username.toString()));
     }
 
     @Override
