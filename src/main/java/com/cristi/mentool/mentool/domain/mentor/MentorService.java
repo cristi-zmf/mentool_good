@@ -2,7 +2,7 @@ package com.cristi.mentool.mentool.domain.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
-import com.cristi.mentool.mentool.exposition.mentor.MentorRegistrationCommand;
+import com.cristi.mentool.mentool.exposition.mentor.MentorEditCommand;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -17,11 +17,16 @@ public class MentorService {
         this.mentors = mentors;
     }
 
-    public Mentor registerMentor(MentorRegistrationCommand registrationCommand) {
+    public Mentor registerMentor(MentorEditCommand registrationCommand) {
         Mentor newMentor = registrationCommand.toNewMentor();
         if (mentors.exists(newMentor.getId())) {
-            throw new IllegalStateException(format("Mentor with address <%s> already exists"));
+            throw new IllegalStateException(format("Mentor with address <%s> already exists", newMentor.getId()));
         }
+        return mentors.add(newMentor);
+    }
+
+    public Mentor updateMentor(MentorEditCommand editCommand) {
+        Mentor newMentor = editCommand.toNewMentor();
         return mentors.add(newMentor);
     }
 

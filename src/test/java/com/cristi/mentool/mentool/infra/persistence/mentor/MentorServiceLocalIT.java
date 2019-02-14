@@ -2,7 +2,7 @@ package com.cristi.mentool.mentool.infra.persistence.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
-import com.cristi.mentool.mentool.exposition.mentor.MentorRegistrationCommand;
+import com.cristi.mentool.mentool.exposition.mentor.MentorEditCommand;
 import com.cristi.mentool.mentool.domain.mentor.MentorService;
 import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
@@ -30,7 +30,7 @@ public class MentorServiceLocalIT extends IntegrationTestWithDataset {
 
     @Test
     public void registerMentor() {
-        MentorRegistrationCommand command = someRegistrationCommand();
+        MentorEditCommand command = someRegistrationCommand();
         Mentor expected = getExpectedFromRegistrationCommand(command);
         Mentor actual = sut.registerMentor(command);
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
@@ -62,14 +62,14 @@ public class MentorServiceLocalIT extends IntegrationTestWithDataset {
         assertThat(actualTrainings).doesNotContain(trainingToRemove);
     }
 
-    private MentorRegistrationCommand someRegistrationCommand() {
-        return new MentorRegistrationCommand(
+    private MentorEditCommand someRegistrationCommand() {
+        return new MentorEditCommand(
                 "Chupa", "Chups", "chupa@chups.com",
                 "1234567890", 10, "www.linkedin.com"
         );
     }
 
-    private Mentor getExpectedFromRegistrationCommand(MentorRegistrationCommand command) {
+    private Mentor getExpectedFromRegistrationCommand(MentorEditCommand command) {
         return new Mentor(
                 new EmailAddress(command.getUsername()), command.getFirstName(), command.getLastName(),
                 new PhoneNumber(command.getPhoneNumber()), command.getYearsOfExperience(), command.getLinkedinUrl(),

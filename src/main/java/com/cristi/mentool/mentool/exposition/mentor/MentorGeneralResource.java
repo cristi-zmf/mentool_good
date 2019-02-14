@@ -26,11 +26,16 @@ public class MentorGeneralResource {
     }
 
     @PutMapping("/mentors")
-    public ResponseEntity<EmailAddress> registerMentor(@Valid @RequestBody MentorRegistrationCommand registrationCommand) {
+    public ResponseEntity<EmailAddress> registerMentor(@Valid @RequestBody MentorEditCommand registrationCommand) {
         return ok(mentorService.registerMentor(registrationCommand).getId());
     }
 
     @PostMapping("/mentors")
+    public ResponseEntity<EmailAddress> updatedMentor(@Valid @RequestBody MentorEditCommand editCommand) {
+        return ok(mentorService.updateMentor(editCommand).getId());
+    }
+
+    @PostMapping("/mentors/trainings")
     public ResponseEntity<EmailAddress> addTraining(@Valid @RequestBody MentorTraining newTraining) {
         return ok(mentorService.registerTraining(newTraining).getId());
     }

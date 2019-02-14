@@ -15,7 +15,7 @@ import java.util.HashSet;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MentorRegistrationCommand {
+public class MentorEditCommand {
     @JsonProperty
     private String firstName;
     @JsonProperty

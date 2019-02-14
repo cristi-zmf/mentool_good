@@ -5,10 +5,7 @@ import com.cristi.mentool.mentool.domain.user.RegisterUser;
 import com.cristi.mentool.mentool.domain.user.User;
 import com.cristi.mentool.mentool.domain.user.Users;
 import com.cristi.mentool.mentool.exposition.MentoolRequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,6 +22,11 @@ public class UserResource {
     @PostMapping(value = "/users")
     public EmailAddress registerUser(@Valid @RequestBody UserDto newUser) {
         return registerUser.registerUser(newUser.toUser()).getId();
+    }
+
+    @PutMapping(value = "/users")
+    public EmailAddress updateUser(@Valid @RequestBody UserDto newUser) {
+        return users.add(newUser.toUser()).getId();
     }
 
     @GetMapping(value = "/users/{emailAddress}")
