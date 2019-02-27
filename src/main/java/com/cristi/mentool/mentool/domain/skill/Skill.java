@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 
-@Entity(name = "SKILL")
+@Entity
 @Access(AccessType.FIELD)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Skill extends BaseEntity<Skill, UniqueId> {
@@ -23,6 +23,10 @@ public class Skill extends BaseEntity<Skill, UniqueId> {
     public Skill(UniqueId id, @NotEmpty String skillName) {
         super(Skill.class, id);
         this.skillName = skillName;
+    }
+
+    public Skill(String skillName) {
+        this(new UniqueId(), skillName);
     }
 
     public String getSkillName() {
