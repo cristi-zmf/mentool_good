@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 @MentoolRequestMapping
 public class SkillResource {
     private final Skills skills;
@@ -24,6 +26,10 @@ public class SkillResource {
 
     @PutMapping("/skills")
     public Skill addSkill(@RequestBody SkillCreateCommand skill) {
-        return skills.add(new Skill(skill.skillName));
+        String skillName = skill.skillName;
+        if (!skills.findAllWithPattern(skillName).isEmpty()) {
+            throw new IllegalStateException(format("Skill %s already exists", skillName));
+        }
+        return skills.add(new Skill(skillName));
     }
 }

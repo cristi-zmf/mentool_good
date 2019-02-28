@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +28,7 @@ public class SkillResourceLocalIT {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Autowired
     private SkillsSdj skillsSdj;
@@ -34,7 +37,8 @@ public class SkillResourceLocalIT {
     public void addSkill_should_add_skill() {
         assertThat(skillsSdj.findAll()).isEmpty();
         String url = format("http://localhost:%d/persons/skills", port);
-        this.restTemplate.put(url, "\"skillName\":\"java\"");
+        SkillCreateCommand command = new SkillCreateCommand("java");
+        this.restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(command), Skill.class);
         assertThat(skillsSdj.findAll()).hasSize(1);
         assertThat(skillsSdj.findAll().get(0)).isEqualToIgnoringGivenFields(new Skill("java"), "id");
     }
