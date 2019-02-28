@@ -13,7 +13,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +27,7 @@ public class SkillResourceLocalIT {
     private int port;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private TestRestTemplate restTemplate;
 
     @Autowired
     private SkillsSdj skillsSdj;
