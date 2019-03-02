@@ -1,7 +1,12 @@
 package com.cristi.mentool.mentool.domain.mentor.calendar;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
-import com.cristi.mentool.mentool.domain.mentor.*;
+import com.cristi.mentool.mentool.domain.mentor.Mentor;
+import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
+import com.cristi.mentool.mentool.domain.mentor.MentorTrainings;
+import com.cristi.mentool.mentool.domain.mentor.Mentors;
+import com.cristi.mentool.mentool.domain.skill.Skill;
+import com.cristi.mentool.mentool.domain.skill.Skills;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +17,13 @@ import static java.util.stream.Collectors.toSet;
 @Service
 public class ViewTrainingsBookedByUser {
     private final MentorCalendars calendar;
-    private final MentorTrainingSearch trainingSearch;
+    private final Skills skills;
     private final MentorTrainings mentorTrainings;
     private final Mentors mentors;
 
-    public ViewTrainingsBookedByUser(MentorCalendars calendar, MentorTrainingSearch trainingSearch, MentorTrainings mentorTrainings, Mentors mentors) {
+    public ViewTrainingsBookedByUser(MentorCalendars calendar, Skills skills, MentorTrainings mentorTrainings, Mentors mentors) {
         this.calendar = calendar;
-        this.trainingSearch = trainingSearch;
+        this.skills = skills;
         this.mentorTrainings = mentorTrainings;
         this.mentors = mentors;
     }
@@ -65,6 +70,7 @@ public class ViewTrainingsBookedByUser {
         MentorCalendar bookedTrainingCalendar = bookedTrainingsByUser.stream()
                 .filter(t -> t.getTrainingId().equals(bookedTraining.getId()))
                 .findFirst().orElseThrow(NoSuchElementException::new);
-        return new MentorTrainingDetails(mentorOfTraining, bookedTraining, bookedTrainingCalendar);
+        Skill skill = skills.getOrThrow(bookedTraining.getSkillId());
+        return new MentorTrainingDetails(mentorOfTraining, bookedTraining, bookedTrainingCalendar, skill);
     }
 }

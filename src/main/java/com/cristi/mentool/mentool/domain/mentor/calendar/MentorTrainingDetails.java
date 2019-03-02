@@ -5,6 +5,7 @@ import com.cristi.mentool.mentool.domain.BaseValueObject;
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
 import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
+import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,6 +21,10 @@ public class MentorTrainingDetails extends BaseValueObject<MentorTrainingDetails
     @NotNull
     @JsonProperty
     private UniqueId trainingId;
+
+    @NotEmpty
+    @JsonProperty
+    private String skillName;
 
     @NotEmpty
     @JsonProperty
@@ -56,11 +61,12 @@ public class MentorTrainingDetails extends BaseValueObject<MentorTrainingDetails
     }
 
     public MentorTrainingDetails(
-            UniqueId trainingId, @NotEmpty String facilitiesDesc, @NotEmpty String prerequisitesDesc, @NotNull EmailAddress emailAddress,
+            UniqueId trainingId, String skillName, @NotEmpty String facilitiesDesc, @NotEmpty String prerequisitesDesc, @NotNull EmailAddress emailAddress,
             int noOfTrainingsDone, @NotEmpty String mentorName, @NotNull BigDecimal fee,
             LocalDateTime startDate, LocalDateTime endDate) {
         this();
         this.trainingId = trainingId;
+        this.skillName = skillName;
         this.facilitiesDesc = facilitiesDesc;
         this.prerequisitesDesc = prerequisitesDesc;
         this.emailAddress = emailAddress;
@@ -71,9 +77,9 @@ public class MentorTrainingDetails extends BaseValueObject<MentorTrainingDetails
         this.fee = fee;
     }
 
-    public MentorTrainingDetails(Mentor mentorOfTraining, MentorTraining training, MentorCalendar trainingCalendar) {
+    public MentorTrainingDetails(Mentor mentorOfTraining, MentorTraining training, MentorCalendar trainingCalendar, Skill skill) {
         this(
-                training.getId(), training.getFacilitiesDesc(), training.getPrerequisitesDesc(), mentorOfTraining.getId(),
+                training.getId(), skill.getSkillName(), training.getFacilitiesDesc(), training.getPrerequisitesDesc(), mentorOfTraining.getId(),
                 training.getNoOfTrainingsDone(), mentorOfTraining.getFullName(), training.getFee(),
                 trainingCalendar.getStartTime(), trainingCalendar.getEndTime()
         );

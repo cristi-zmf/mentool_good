@@ -1,7 +1,10 @@
 package com.cristi.mentool.mentool.domain.skill;
 
+import com.cristi.mentool.mentool.domain.UniqueId;
+
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
@@ -19,6 +22,12 @@ public class InMemorySkills implements Skills {
         return db.stream().filter(t -> t.getSkillName().toLowerCase().contains(lowerCasePattern))
                 .collect(toList());
 
+    }
+
+    @Override
+    public Skill getOrThrow(UniqueId skillId) {
+        return db.stream().filter(s -> skillId.equals(s.getId()))
+                .findFirst().orElseThrow(NoSuchElementException::new);
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendars;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorTrainingDetails;
+import com.cristi.mentool.mentool.domain.skill.Skill;
+import com.cristi.mentool.mentool.domain.skill.Skills;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.exposition.mentor.MentorEditCommand;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,13 @@ public class MentorService {
     private final Mentors mentors;
     private final MentorCalendars calendar;
     private final MentorTrainings trainings;
+    private final Skills skills;
 
-    public MentorService(Mentors mentors, MentorCalendars calendar, MentorTrainings trainings) {
+    public MentorService(Mentors mentors, MentorCalendars calendar, MentorTrainings trainings, Skills skills) {
         this.mentors = mentors;
         this.calendar = calendar;
         this.trainings = trainings;
+        this.skills = skills;
     }
 
     public Mentor registerMentor(MentorEditCommand registrationCommand) {
@@ -65,7 +69,8 @@ public class MentorService {
         MentorTraining training = trainings.getOrThrow(trainingId);
         Mentor mentor = mentors.getOrThrow(training.getMentorId());
         MentorCalendar trainingCalendar = calendar.findByTraining(trainingId);
-        return new MentorTrainingDetails(mentor, training, trainingCalendar);
+        Skill skill = skills.getOrThrow(training.getSkillId());
+        return new MentorTrainingDetails(mentor, training, trainingCalendar, skill);
     }
 
     private Set<MentorTrainingDetails> mapMentorTrainingsDetails(Mentor mentor, Set<MentorTraining> trainings, Set<MentorCalendar> trainingsCalendar) {
@@ -74,7 +79,8 @@ public class MentorService {
             MentorCalendar trainingCalendar = trainingsCalendar.stream()
                     .filter(c -> c.getTrainingId().equals(training.getId()))
                     .findFirst().orElseThrow(NoSuchElementException::new);
-            trainingDetails.add(new MentorTrainingDetails(mentor, training, trainingCalendar));
+            Skill skill = skills.getOrThrow(training.getSkillId());
+            trainingDetails.add(new MentorTrainingDetails(mentor, training, trainingCalendar, skill));
         }
         return trainingDetails;
     }

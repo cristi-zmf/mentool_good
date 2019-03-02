@@ -41,12 +41,12 @@ public class MentorGeneralResource {
         return ok(mentorService.updateMentor(editCommand).getId());
     }
 
-    @PostMapping("/mentors/{mentorAddress}/trainings")
+    @GetMapping("/mentors/{mentorAddress}/trainings")
     public Set<MentorTrainingDetails> viewTrainings(@PathVariable @Valid EmailAddress mentorAddress) {
         return mentorService.viewTrainingsDetails(mentorAddress);
     }
 
-    @PostMapping("/mentors/trainings/{trainingId}")
+    @GetMapping("/mentors/trainings/{trainingId}")
     public MentorTrainingDetails viewTrainingDetails(@PathVariable @Valid UniqueId trainingId) {
         return mentorService.viewTrainingDetails(trainingId);
     }

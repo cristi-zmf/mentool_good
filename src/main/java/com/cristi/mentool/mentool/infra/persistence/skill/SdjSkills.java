@@ -1,11 +1,13 @@
 package com.cristi.mentool.mentool.infra.persistence.skill;
 
+import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Repository
 public class SdjSkills implements Skills {
@@ -21,6 +23,11 @@ public class SdjSkills implements Skills {
             return  new ArrayList<>(sdj.findAll());
         }
         return new ArrayList<>(sdj.findSkillBySkillNameContainsIgnoreCase(skillNamePattern));
+    }
+
+    @Override
+    public Skill getOrThrow(UniqueId skillId) {
+        return sdj.findById(skillId).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
