@@ -2,7 +2,6 @@ package com.cristi.mentool.mentool.infra.persistence.mentor;
 
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorCalendar;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,10 +32,12 @@ public class SdjMentorCalendarsLocalIT {
     public void setup() {
         sdj.deleteAll();
         entry1 = new MentorCalendar(
-                new UniqueId(), new UniqueId(), LocalDateTime.parse("2018-12-23T23:00:00"), LocalDateTime.parse("2018-12-27T23:00:00")
+                new UniqueId(), new UniqueId(), LocalDateTime.parse("2018-12-23T23:00:00"), LocalDateTime.parse("2018-12-27T23:00:00"),
+                20, emptySet()
         );
         entry2 = new MentorCalendar(
-                new UniqueId(), new UniqueId(), LocalDateTime.parse("2018-11-20T23:00:00"), LocalDateTime.parse("2018-12-24T23:00:00")
+                new UniqueId(), new UniqueId(), LocalDateTime.parse("2018-11-20T23:00:00"), LocalDateTime.parse("2018-12-24T23:00:00"),
+                15, emptySet()
         );
         sdj.saveAll(asList(entry1, entry2));
     }

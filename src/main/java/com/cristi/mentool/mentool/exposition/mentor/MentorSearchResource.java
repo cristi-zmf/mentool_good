@@ -5,8 +5,6 @@ import com.cristi.mentool.mentool.domain.mentor.MentorTrainingSearch;
 import com.cristi.mentool.mentool.exposition.MentoolRequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,7 +22,7 @@ public class MentorSearchResource {
     @PostMapping(path = "/mentors/search", consumes = APPLICATION_JSON_UTF8_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
     public List<MentorSearchResult> findMentors(@Valid @RequestBody MentorSearchRequest request) {
         return trainingSearch.searchForMentors(
-                request.getSkillNamePattern(), request.getStartTime(), request.getEndTime()
+                request.getSkillNamePattern(), request.startTime(), request.endTime()
         );
     }
 }

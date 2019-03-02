@@ -33,4 +33,8 @@ public class BaseUser extends BaseEntity<BaseUser, EmailAddress> {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
     }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

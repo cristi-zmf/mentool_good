@@ -1,12 +1,18 @@
 package com.cristi.mentool.mentool.exposition.mentor;
 
-import com.cristi.mentool.mentool.domain.mentor.*;
+import com.cristi.mentool.mentool.domain.UniqueId;
+import com.cristi.mentool.mentool.domain.mentor.Mentor;
+import com.cristi.mentool.mentool.domain.mentor.MentorService;
+import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
+import com.cristi.mentool.mentool.domain.mentor.Mentors;
+import com.cristi.mentool.mentool.domain.mentor.calendar.MentorTrainingDetails;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.exposition.MentoolRequestMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -33,6 +39,16 @@ public class MentorGeneralResource {
     @PostMapping("/mentors")
     public ResponseEntity<EmailAddress> updatedMentor(@Valid @RequestBody MentorEditCommand editCommand) {
         return ok(mentorService.updateMentor(editCommand).getId());
+    }
+
+    @PostMapping("/mentors/{mentorAddress}/trainings")
+    public Set<MentorTrainingDetails> viewTrainings(@PathVariable @Valid EmailAddress mentorAddress) {
+        return mentorService.viewTrainingsDetails(mentorAddress);
+    }
+
+    @PostMapping("/mentors/trainings/{trainingId}")
+    public MentorTrainingDetails viewTrainingDetails(@PathVariable @Valid UniqueId trainingId) {
+        return mentorService.viewTrainingDetails(trainingId);
     }
 
     @PostMapping("/mentors/trainings")

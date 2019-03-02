@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.cristi.mentool.mentool.infra.dataset.MentorDataSet.LINUS;
+import static java.util.Collections.emptySet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
@@ -150,7 +152,9 @@ public class MentorTrainingSearchLocalIT extends IntegrationTestWithNoDataset {
     }
 
     private void setupCalendar(MentorTraining mentorTraining) {
-        MentorCalendar calendarEntry = new MentorCalendar(new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME);
+        MentorCalendar calendarEntry = new MentorCalendar(
+                new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME, 20, emptySet()
+        );
         sdjMemoryCalendars.add(calendarEntry);
     }
 }

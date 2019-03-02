@@ -28,6 +28,11 @@ public class SdjUsers implements Users {
     }
 
     @Override
+    public Set<User> findAll(Set<EmailAddress> emails) {
+        return new HashSet<>(sdj.findAllById(emails));
+    }
+
+    @Override
     public User getOrThrow(EmailAddress userId) {
         return sdj.findById(userId)
                 .orElseThrow(

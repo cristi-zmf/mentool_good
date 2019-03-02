@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.cristi.mentool.mentool.infra.dataset.MentorDataSet.LINUS;
+import static java.util.Collections.emptySet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MentorTrainingSearchTest {
@@ -128,7 +129,10 @@ public class MentorTrainingSearchTest {
     }
 
     private void setupCalendar(MentorTraining mentorTraining) {
-        MentorCalendar calendarEntry = new MentorCalendar(new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME);
+        MentorCalendar calendarEntry = new MentorCalendar(
+                new UniqueId(), mentorTraining.getId(), START_TIME, END_TIME,
+                20, emptySet()
+        );
         inMemoryCalendars.add(calendarEntry);
     }
 }

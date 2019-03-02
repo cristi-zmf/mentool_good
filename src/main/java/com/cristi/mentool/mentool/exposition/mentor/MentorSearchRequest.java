@@ -24,14 +24,14 @@ public class MentorSearchRequest {
         return skillNamePattern;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalDateTime startTime() {
         if (StringUtils.isEmpty(startDate)) {
             return null;
         }
         return LocalDateTime.parse(startDate);
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalDateTime endTime() {
         if (StringUtils.isEmpty(endDate)) {
             return null;
         }
