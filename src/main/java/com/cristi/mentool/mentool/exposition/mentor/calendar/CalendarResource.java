@@ -7,10 +7,7 @@ import com.cristi.mentool.mentool.domain.mentor.calendar.ViewTrainingsBookedByUs
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.exposition.MentoolRequestMapping;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -25,12 +22,12 @@ public class CalendarResource {
         this.viewTrainingsBookedByUser = viewTrainingsBookedByUser;
     }
 
-    @PostMapping("/calendar/book")
+    @PutMapping("/calendar/book")
     public ResponseEntity<Boolean> bookTraining(@Valid @RequestBody BookingCommand bookingCommand) {
         return ResponseEntity.ok(bookTraining.bookTrainingForTrainee(bookingCommand));
     }
 
-    @PostMapping("/calendar/cancel-booking")
+    @PutMapping("/calendar/cancel-booking")
     public ResponseEntity<Boolean> cancelBookingForTraining(@Valid @RequestBody BookingCommand bookingCommand) {
         return ResponseEntity.ok(bookTraining.cancelBookingTrainingForTrainee(bookingCommand));
     }

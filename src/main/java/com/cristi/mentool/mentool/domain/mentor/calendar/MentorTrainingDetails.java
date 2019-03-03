@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 
@@ -56,14 +57,18 @@ public class MentorTrainingDetails extends BaseValueObject<MentorTrainingDetails
     @JsonProperty
     private LocalDateTime endDate;
 
+    @JsonProperty
+    private Set<EmailAddress> traineesBooked;
+
     private MentorTrainingDetails() {
         super(MentorTrainingDetails.class);
     }
 
     public MentorTrainingDetails(
-            UniqueId trainingId, String skillName, @NotEmpty String facilitiesDesc, @NotEmpty String prerequisitesDesc, @NotNull EmailAddress emailAddress,
-            int noOfTrainingsDone, @NotEmpty String mentorName, @NotNull BigDecimal fee,
-            LocalDateTime startDate, LocalDateTime endDate) {
+            UniqueId trainingId, String skillName, @NotEmpty String facilitiesDesc, @NotEmpty String prerequisitesDesc,
+            @NotNull EmailAddress emailAddress, int noOfTrainingsDone, @NotEmpty String mentorName, @NotNull BigDecimal fee,
+            LocalDateTime startDate, LocalDateTime endDate, Set<EmailAddress> traineesBooked
+    ) {
         this();
         this.trainingId = trainingId;
         this.skillName = skillName;
@@ -75,13 +80,15 @@ public class MentorTrainingDetails extends BaseValueObject<MentorTrainingDetails
         this.startDate = startDate;
         this.endDate = endDate;
         this.fee = fee;
+        this.traineesBooked = traineesBooked;
     }
 
     public MentorTrainingDetails(Mentor mentorOfTraining, MentorTraining training, MentorCalendar trainingCalendar, Skill skill) {
         this(
                 training.getId(), skill.getSkillName(), training.getFacilitiesDesc(), training.getPrerequisitesDesc(), mentorOfTraining.getId(),
                 training.getNoOfTrainingsDone(), mentorOfTraining.getFullName(), training.getFee(),
-                trainingCalendar.getStartTime(), trainingCalendar.getEndTime()
+                trainingCalendar.getStartTime(), trainingCalendar.getEndTime(),
+                trainingCalendar.getTraineesBooked()
         );
     }
 

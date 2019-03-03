@@ -1,6 +1,7 @@
 package com.cristi.mentool.mentool.exposition.skill;
 
 import com.cristi.mentool.mentool.domain.skill.Skill;
+import com.cristi.mentool.mentool.exposition.BaseExpoTest;
 import com.cristi.mentool.mentool.infra.persistence.skill.SkillsSdj;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,18 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("NO_DATA_SET")
-@Transactional
-public class SkillResourceLocalIT {
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
-
+public class SkillResourceLocalIT extends BaseExpoTest {
     @Autowired
     private SkillsSdj skillsSdj;
 
