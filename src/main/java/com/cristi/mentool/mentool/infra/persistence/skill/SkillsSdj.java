@@ -9,4 +9,6 @@ import java.util.Set;
 public interface SkillsSdj extends JpaRepository<Skill, UniqueId> {
 
     Set<Skill> findSkillBySkillNameContainsIgnoreCase(String pattern);
+
+    boolean existsBySkillNameEqualsIgnoreCase(String skillName);
 }

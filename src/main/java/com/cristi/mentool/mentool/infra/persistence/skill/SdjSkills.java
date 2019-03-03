@@ -34,4 +34,9 @@ public class SdjSkills implements Skills {
     public Skill add(Skill skill) {
         return sdj.saveAndFlush(skill);
     }
+
+    @Override
+    public boolean exists(String skillName) {
+        return sdj.existsBySkillNameEqualsIgnoreCase(skillName);
+    }
 }

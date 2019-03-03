@@ -27,7 +27,7 @@ public class SkillResource {
     @PutMapping("/skills")
     public Skill addSkill(@RequestBody SkillCreateCommand skill) {
         String skillName = skill.skillName;
-        if (!skills.findAllWithPattern(skillName).isEmpty()) {
+        if (skills.exists(skillName)) {
             throw new IllegalStateException(format("Skill %s already exists", skillName));
         }
         return skills.add(new Skill(skillName));

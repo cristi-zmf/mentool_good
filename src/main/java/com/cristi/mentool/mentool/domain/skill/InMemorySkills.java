@@ -35,4 +35,9 @@ public class InMemorySkills implements Skills {
         db.add(training);
         return training;
     }
+
+    @Override
+    public boolean exists(String skillName) {
+        return db.stream().anyMatch(s -> s.getSkillName().equalsIgnoreCase(skillName));
+    }
 }
