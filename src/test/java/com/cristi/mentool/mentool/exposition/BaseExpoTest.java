@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-public class BaseExpoTest {
+public abstract class BaseExpoTest {
 
     @LocalServerPort
     protected int port;
