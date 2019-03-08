@@ -3,7 +3,6 @@ package com.cristi.mentool.mentool.exposition.mentor;
 import com.cristi.mentool.mentool.domain.UniqueId;
 import com.cristi.mentool.mentool.domain.mentor.Mentor;
 import com.cristi.mentool.mentool.domain.mentor.MentorService;
-import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
 import com.cristi.mentool.mentool.domain.mentor.Mentors;
 import com.cristi.mentool.mentool.domain.mentor.calendar.MentorTrainingDetails;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
@@ -52,8 +51,8 @@ public class MentorGeneralResource {
     }
 
     @PostMapping("/mentors/trainings")
-    public ResponseEntity<EmailAddress> addTraining(@Valid @RequestBody MentorTraining newTraining) {
-        return ok(mentorService.registerTraining(newTraining).getId());
+    public ResponseEntity<UniqueId> addTraining(@Valid @RequestBody TrainingAddCommand trainingAddCommand) {
+        return ok(mentorService.registerTraining(trainingAddCommand));
     }
 
     @DeleteMapping("/mentors/trainings")

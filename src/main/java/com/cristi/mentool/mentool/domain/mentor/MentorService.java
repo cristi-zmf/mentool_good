@@ -8,6 +8,7 @@ import com.cristi.mentool.mentool.domain.skill.Skill;
 import com.cristi.mentool.mentool.domain.skill.Skills;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.exposition.mentor.MentorEditCommand;
+import com.cristi.mentool.mentool.exposition.mentor.TrainingAddCommand;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -44,10 +45,14 @@ public class MentorService {
         return mentors.add(newMentor);
     }
 
-    public Mentor registerTraining(MentorTraining training) {
-        Mentor mentorTeachingTraining = mentors.getOrThrow(training.getMentorId());
-        mentorTeachingTraining.addTraining(training);
-        return mentors.add(mentorTeachingTraining);
+    public UniqueId registerTraining(TrainingAddCommand command) {
+        MentorTraining newTraining = command.createMentorTraining();
+        Mentor mentorTeachingTraining = mentors.getOrThrow(newTraining.getMentorId());
+        MentorCalendar trainingCalendar = command.createTrainingCalendar(newTraining.getId());
+        mentorTeachingTraining.addTraining(newTraining);
+        calendar.add(trainingCalendar);
+        mentors.add(mentorTeachingTraining);
+        return newTraining.getId();
     }
 
     public Mentor removeTrainings(EmailAddress address, Set<UniqueId> trainingIds) {

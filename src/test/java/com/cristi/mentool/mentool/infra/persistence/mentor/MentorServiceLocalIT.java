@@ -7,6 +7,7 @@ import com.cristi.mentool.mentool.domain.mentor.MentorService;
 import com.cristi.mentool.mentool.domain.mentor.MentorTraining;
 import com.cristi.mentool.mentool.domain.user.EmailAddress;
 import com.cristi.mentool.mentool.domain.user.PhoneNumber;
+import com.cristi.mentool.mentool.exposition.mentor.TrainingAddCommand;
 import com.cristi.mentool.mentool.infra.dataset.MentorDataSet;
 import com.cristi.mentool.mentool.infra.dataset.SkillsDataset;
 import com.cristi.mentool.mentool.infra.persistence.IntegrationTestWithDataset;
@@ -14,10 +15,12 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import static java.time.LocalDateTime.now;
 import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,14 +43,21 @@ public class MentorServiceLocalIT extends IntegrationTestWithDataset {
     public void registerTraining() {
         EmailAddress linusId = MentorDataSet.LINUS.getId();
         MentorTraining training = someNewTraining(linusId);
+        TrainingAddCommand command = new TrainingAddCommand(
+                training.getFacilitiesDesc(), training.getSkillId(), training.getPrerequisitesDesc(),
+                training.getNoOfTrainingsDone(), training.getMentorId(), training.getFee(), now().minusDays(1L), now()
+        );
         Mentor linus = sdj.findById(linusId).orElseThrow(NoSuchElementException::new);
         int numberOfTrainingsBeforeNewTraining = linus.getTrainings().size();
-        sut.registerTraining(training);
+        Set<MentorTraining> trainingsBefore = linus.getTrainings();
+        sut.registerTraining(command);
         linus = sdj.findById(linusId).orElseThrow(NoSuchElementException::new);
-        int numberOfTrainingsAfterAddingNewTraining = linus.getTrainings().size();
-        MentorTraining savedTraining = linus.getTraining(training.getId()).orElseThrow(NoSuchElementException::new);
+        Set<MentorTraining> updatedTrainings = linus.getTrainings();
+        int numberOfTrainingsAfterAddingNewTraining = updatedTrainings.size();
+        updatedTrainings.removeAll(trainingsBefore);
+        MentorTraining savedTraining = updatedTrainings.stream().findFirst().orElseThrow(NoSuchElementException::new);
         assertThat(numberOfTrainingsAfterAddingNewTraining).isEqualTo(numberOfTrainingsBeforeNewTraining + 1);
-        assertThat(savedTraining).isEqualToComparingFieldByFieldRecursively(training);
+        assertThat(savedTraining).isEqualToIgnoringGivenFields(training, "id");
     }
 
     @Test
